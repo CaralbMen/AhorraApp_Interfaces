@@ -4,7 +4,6 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: '#eaf8fbff',
         alignItems: 'center',
-        justifyContent: 'top',
     },
     cabecera:{
         width: '100%',
@@ -35,4 +34,39 @@ export default StyleSheet.create({
         marginBottom:2,
         marginRight: 17,
     },
+    footer:{
+        backgroundColor: '#eaf4f5ff',
+        width: '100%',
+        height: '10%',
+        flexDirection: 'row',
+        justifyContent:'space-around',
+        alignItems: 'center',
+        padding:15,
+        paddingBottom: 30,
+    },
+    pantallaActualContainer:{
+        width: '90%',
+        height: 80,
+        marginTop: 10,
+        justifyContent:'flex-end',
+        backgroundColor: '#C0D5F2',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        paddingBottom: 8,
+        paddingLeft: 8,
+        borderBottomColor: '#E0EDFF',
+        borderBottomWidth: 4,
+    },
+    textoPantalla:{
+        color: 'gray',
+        fontSize: 22,
+        padding: 5,
+        backgroundColor: '#E0EDFF',
+        width: '60%',
+        borderRadius: 10,
+    },
+    contenidoScreen:{
+        backgroundColor:'#C0D5F2',
+        width: '90%',
+    }
 })

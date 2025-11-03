@@ -1,50 +1,58 @@
 import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animated, Easing, Switch  } from 'react-native'
 import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
+import Transacciones from '../screens/Transacciones';
 export default function Login() {
-  return(
-    <View style={estilosGlobales.container}>
-      <View style={estilosGlobales.cabecera}>
-        <View style={estilosGlobales.tituloContent}>
-          <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
-        </View>
-      </View>
-        <View>
-          <ImageBackground
-            source={require('../assets/LogoAhorraSinFondo.png')}
-            style={estilosGlobales.logo}
-          />
-        </View>
-        <View>
-          <Text style={styles.tittle} >Inicia Sesion</Text>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.text}>Correo Electronico: </Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder='abcd@gmail.com'
-            cursorColor="#24be21ff" 
-          
-          />
-          <Text style={styles.text}>Password: </Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder='********'
-            secureTextEntry={true}
+  const[pantalla, setPantalla]= useState('login');
+
+  switch(pantalla){
+    case 'dashboard':
+      return <Transacciones/>
+    case 'login':
+      default:
+        return(
+          <View style={estilosGlobales.container}>
+            <View style={estilosGlobales.cabecera}>
+              <View style={estilosGlobales.tituloContent}>
+                <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
+              </View>
+            </View>
+              <View>
+                <ImageBackground
+                  source={require('../assets/LogoAhorraSinFondo.png')}
+                  style={estilosGlobales.logo}
+                />
+              </View>
+              <View>
+                <Text style={styles.tittle} >Inicia Sesion</Text>
+              </View>
+              <View style={styles.container}>
+                <Text style={styles.text}>Correo Electronico: </Text>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder='abcd@gmail.com'
+                  cursorColor="#24be21ff" 
+                
+                />
+                <Text style={styles.text}>Password: </Text>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder='********'
+                  secureTextEntry={true}
+                  
+                
+                />
+                <Text>Olvidaste tu contraseña?</Text>
             
-          
-          />
-          <Text>Olvidaste tu contrasena?</Text>
-      
-        </View>
-        <Button
-          title='Iniciar Sesion'
-          onPress={() => Alert.alert('Iniciando Sesion')}
-        />
-        <Text>¿No tienes una cuenta? Registrate</Text>
-    </View>
-  )
-  
+              </View>
+              <Button
+                title='Iniciar Sesion'
+                onPress={()=>setPantalla('dashboard')}
+              />
+              <Text>¿No tienes una cuenta? Registrate</Text>
+          </View>
+        )
+  }
 }
 
 const styles = StyleSheet.create({

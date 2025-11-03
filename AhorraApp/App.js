@@ -5,12 +5,8 @@ import Transacciones from './screens/Transacciones';
 import Login from './screens/Login';
 
 export default function App() {
-
   return <Login/>
-
-
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
