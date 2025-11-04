@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import estilosGlobales from '../styles/estilosGlobales';
+import estilosGlobales from './styles/estilosGlobales';
 
 const movimientosData = [
     {id: '1', desc: 'Depósito', monto: '+ $5,000.00', fecha: 'Feb 31, 2025', tipo: 'ingreso'},
@@ -47,7 +47,7 @@ export default function PantallaPrincipal({ navigation }) {
                     </TouchableOpacity>
                 </ScrollView>
             </View>
-            <View style={estilodGlobales.footer}>
+            <View style={estilosGlobales.footer}>
                 <TouchableOpacity onPress={() => navigation.navigate('Principal')}>
                     <Text style={styles.footerIcon}>🏠</Text>
                 </TouchableOpacity>
