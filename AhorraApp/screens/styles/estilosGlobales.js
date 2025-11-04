@@ -35,7 +35,7 @@ export default StyleSheet.create({
         marginRight: 17,
     },
     footer:{
-        backgroundColor: '#898888ff',
+        // backgroundColor: '#e8e8e8ff',
         width: '100%',
         height: '10%',
         flexDirection: 'row',
@@ -43,6 +43,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         padding:15,
         paddingBottom: 30,
+        marginTop: 20,
     },
     pantallaActualContainer:{
         width: '90%',
@@ -68,5 +69,8 @@ export default StyleSheet.create({
     contenidoScreen:{
         backgroundColor:'#C0D5F2',
         width: '90%',
+        borderRadius:10,
+        borderTopColor:'#a8c0e2ff',
+        borderTopWidth:2,
     },
 })
