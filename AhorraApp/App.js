@@ -5,9 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Transacciones from './screens/Transacciones';
 import Login from './screens/Login';
 import PantallaPrincipal from './screens/PantallaPrincipal';
+import Egresoss from './screens/EgresosScreen';
 
 export default function App() {
   return <Login/>
+  // return <Egresoss></Egresoss>
 }
 const styles = StyleSheet.create({
   container: {

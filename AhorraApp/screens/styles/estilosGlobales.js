@@ -35,7 +35,7 @@ export default StyleSheet.create({
         marginRight: 17,
     },
     footer:{
-        backgroundColor: '#eaf4f5ff',
+        backgroundColor: '#898888ff',
         width: '100%',
         height: '10%',
         flexDirection: 'row',
@@ -68,5 +68,5 @@ export default StyleSheet.create({
     contenidoScreen:{
         backgroundColor:'#C0D5F2',
         width: '90%',
-    }
+    },
 })
