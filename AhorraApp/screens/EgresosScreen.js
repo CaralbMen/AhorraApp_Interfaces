@@ -1,4 +1,5 @@
 import { Text, StyleSheet, View } from 'react-native'
+import React, {useState} from 'react'
 
 export default function EgresosScreen() {
     const [tipo, setTipo] = useState("Egreso");

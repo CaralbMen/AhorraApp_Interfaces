@@ -2,16 +2,26 @@ import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animat
 import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
 import Transacciones from '../screens/Transacciones';
+import Registro from '../screens/Registro';
+import Recuperacion from '../screens/Recuperacion';
 export default function Login() {
   const[pantalla, setPantalla]= useState('login');
 
   switch(pantalla){
     case 'dashboard':
       return <Transacciones/>
+    case 'Registro':
+      return <Registro/>
+    case 'Recuperacion':
+      return <Recuperacion/>
     case 'login':
       default:
         return(
-          <View style={estilosGlobales.container}>
+          <View style={styles.mainContainer}>
+            <ScrollView 
+              contentContainerStyle={styles.scrollContainer}
+              showsVerticalScrollIndicator={false}
+            >
             <View style={estilosGlobales.cabecera}>
               <View style={estilosGlobales.tituloContent}>
                 <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
@@ -39,11 +49,13 @@ export default function Login() {
                 style={styles.inputs}
                 placeholder='********'
                 secureTextEntry={true}
+                cursorColor="#24be21ff" 
                 
               
               />
               <Pressable 
                 style={{alignSelf:'flex-start'}}
+                onPress={()=>setPantalla('Recuperacion')}
               >
                <Text style={styles.olvidoContra}>¿Olvidaste tu contraseña?</Text>
               </Pressable>
@@ -55,11 +67,14 @@ export default function Login() {
             >
               <Text style={styles.textbutton}>Iniciar Sesion</Text>
             </Pressable>
-            <Text>¿No tienes una cuenta? Registrate</Text>
-
             
-            <View  style={estilosGlobales.footer}>
-              <Text>Derechos Reservados</Text>
+            <Pressable onPress={()=>setPantalla('Registro')} >
+              <Text style={styles.resitroText}>¿No tienes una cuenta? Registrate</Text>
+            </Pressable>
+            </ScrollView>
+            
+            <View  style={styles.footer}>
+              <Text style={styles.footerText}>Derechos Reservados</Text>
             </View>
           </View>
           
@@ -69,9 +84,19 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#E6F3FF',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingBottom: 80, // Espacio para que no se oculte contenido detrás del footer
+  },
 
   tittle:{
-    fontSize: 50,
+    fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 30,
@@ -82,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '80%',
-    backgroundColor: 'rgba(115, 212, 242, 0.3)',
+    backgroundColor: '#C0D5F2',
     padding: 20,
     borderRadius: 10,
     paddingVertical: 16,
@@ -93,7 +118,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 20,
     alignItems: 'flex-start',
-    fontWeight: 'bold',
     color: '#24be21ff',
     alignSelf: 'flex-start',
 
@@ -105,7 +129,7 @@ const styles = StyleSheet.create({
     borderRadius:8,
     padding:10,
     marginBottom: 15,
-    backgroundColor: '#rgba(189, 192, 193, 0.4)',
+    backgroundColor: 'rgba(255, 255, 255, 0.68)',
     underlineColorAndroid: 'transparent',  // Esto quita la línea en Android
   },
   olvidoContra:{
@@ -117,15 +141,38 @@ const styles = StyleSheet.create({
   },
   button:{
     backgroundColor: '#006AFF',
-    padding: 10,
-    borderRadius: 20,
-    width: '30%',
+    padding: 20,
+    borderRadius: 30,
+    width: '35%',
     alignItems: 'center',
+    marginTop: 15,
   },
   textbutton:{
     color: 'white',
     fontWeight: 'bold',
     fontSize: 15,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#757676ff',
+    paddingVertical: 15,
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0,0,0,0.1)',
+  },
+  footerText: {
+    fontSize: 20,
+    color: '#ffffffff',
+  },
+  resitroText:{
+    fontSize: 16,
+    color: 'blue',
+    textDecorationLine: 'underline',
+    marginTop: 10,
+    
   },
  
 })
