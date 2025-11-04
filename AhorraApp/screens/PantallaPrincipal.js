@@ -1,7 +1,6 @@
-import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import estilosGlobales from '../styles/estilosGlobales';
+import estilosGlobales from './styles/estilosGlobales';
 
 const movimientosData = [
     {id: '1', desc: 'Depósito', monto: '+ $5,000.00', fecha: 'Feb 31, 2025', tipo: 'ingreso'},
