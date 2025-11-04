@@ -1,90 +1,83 @@
 import { View, Text, ImageBackground, StyleSheet, Button } from 'react-native'
 import React, {useState} from 'react'
 import estilosGlobales from './styles/estilosGlobales'
-import Main from '../App';
+
 export default function DetalleDeMovimiento() {
-    const [volver, setVolver]=useState(false);
-    if(volver){
-        return <Main/>
-    }else{
-        return (
-            <View style={estilosGlobales.container}>
-                <View style={estilosGlobales.cabecera}>
-                    <View style={estilosGlobales.tituloContent}>
-                        <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
+    
+    return (
+        <View style={estilosGlobales.container}>
+            <View style={estilosGlobales.cabecera}>
+                <View style={estilosGlobales.tituloContent}>
+                    <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
+                </View>
+                <View style={estilosGlobales.logoContent}>
+                    <ImageBackground
+                        source={require('../assets/LogoAhorraSinFondo.png')}
+                        style={estilosGlobales.logo}
+                    />
+                </View>
+            </View>
+
+            <View style={estilosGlobales.pantallaActualContainer}>
+                <Text style={estilosGlobales.textoPantalla}>Pago de Renta</Text>
+            </View>
+
+            <View style={styles.categoriaContainer}>
+                <Text style={styles.categoriaLabel}>Categoría: </Text>
+                <Text style={styles.nombreCategora}>Renta</Text>
+            </View>
+            <View style={styles.contenedorInfo}>
+                <View
+                    style={styles.contenedorClaro}
+                >
+                    <View style={styles.contentFecha}>
+                        <Text style={styles.fecha}>31 de Febrero del 2025</Text>
                     </View>
-                    <View style={estilosGlobales.logoContent}>
-                        <ImageBackground
-                            source={require('../assets/LogoAhorraSinFondo.png')}
-                            style={estilosGlobales.logo}
-                        />
+                    <Text style={styles.DescripcionLabel}>Descripción:</Text>
+                    <View style={styles.descripcionHoja}>
+                        <Text style={styles.renglon}>Pago de la renta del depa</Text>
+                        <Text style={styles.renglon}>para el mes de marzo</Text>
+                        <Text style={styles.renglon}></Text>
+                        <Text style={styles.renglon}></Text>
+                        <Text style={styles.renglon}></Text>
+                        <Text style={styles.renglon}></Text>
                     </View>
+                    <Text style={styles.usadoLabel}>Se usó la cantidad de $3500.00 </Text>
+                    <Text style={styles.usadoLabel}>de la categoría</Text>
+                    <Text style={styles.usadoLabel}></Text>
+                    <Text style={styles.usadoLabel}>Quedan $4,000.00 para llegar </Text>
+                    <Text style={styles.usadoLabel}>al límite</Text>
                 </View>
-
-                <View style={estilosGlobales.pantallaActualContainer}>
-                    <Text style={estilosGlobales.textoPantalla}>Pago de Renta</Text>
-                </View>
-
-                <View style={styles.categoriaContainer}>
-                    <Text style={styles.categoriaLabel}>Categoría: </Text>
-                    <Text style={styles.nombreCategora}>Renta</Text>
-                </View>
-                <View style={styles.contenedorInfo}>
-                    <View
-                        style={styles.contenedorClaro}
-                    >
-                        <View style={styles.contentFecha}>
-                            <Text style={styles.fecha}>31 de Febrero del 2025</Text>
-                        </View>
-                        <Text style={styles.DescripcionLabel}>Descripción:</Text>
-                        <View style={styles.descripcionHoja}>
-                            <Text style={styles.renglon}>Pago de la renta del depa</Text>
-                            <Text style={styles.renglon}>para el mes de marzo</Text>
-                            <Text style={styles.renglon}></Text>
-                            <Text style={styles.renglon}></Text>
-                            <Text style={styles.renglon}></Text>
-                            <Text style={styles.renglon}></Text>
-                        </View>
-                        <Text style={styles.usadoLabel}>Se usó la cantidad de $3500.00 </Text>
-                        <Text style={styles.usadoLabel}>de la categoría</Text>
-                        <Text style={styles.usadoLabel}></Text>
-                        <Text style={styles.usadoLabel}>Quedan $4,000.00 para llegar </Text>
-                        <Text style={styles.usadoLabel}>al límite</Text>
-                    </View>
-                    
-                </View>
+                
+            </View>
 
 
 
 
 
-                 
-                <View style={estilosGlobales.footer}>
-                    <ImageBackground
-                        source={require('../assets/iconoCategorias.png')}
-                        style={styles.icono}
-                    />
-                    <ImageBackground
-                        source={require('../assets/iconoHome.png')}
-                        style={styles.icono}
-                    />
-                    <ImageBackground
-                        source={require('../assets/iconoMas.png')}
-                        style={styles.icono}
-                    />
-                    <ImageBackground
-                        source={require('../assets/iconoPerfil.png')}
-                        style={styles.icono}
-                    />
-                </View>
-               <Button
-                    title='Volver'
-                    onPress={()=>setVolver(true)}
-                    
+                
+            <View style={estilosGlobales.footer}>
+                <ImageBackground
+                    source={require('../assets/iconoCategorias.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoHome.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoMas.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoPerfil.png')}
+                    style={styles.icono}
                 />
             </View>
-        )
-    }
+            
+        </View>
+    )
+
 }
 const styles= StyleSheet.create({
     icono:{

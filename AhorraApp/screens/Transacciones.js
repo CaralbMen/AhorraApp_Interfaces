@@ -1,283 +1,280 @@
 import { Button, Text, View, ImageBackground, ScrollView, StyleSheet, TextInput } from 'react-native'
 import React, { Component, useState } from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
-import Main from '../App'
-export default function Transacciones(){
-    const [volver, setVolver]= useState(false);
-    if(volver){
-        return <Main/>
-    }else{
-        return (
-            <View style={estilosGlobales.container}>
-                <View style={estilosGlobales.cabecera}>
-                    <View style={estilosGlobales.tituloContent}>
-                        <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
-                    </View>
-                    <View style={estilosGlobales.logoContent}>
-                        <ImageBackground
-                            source={require('../assets/LogoAhorraSinFondo.png')}
-                            style={estilosGlobales.logo}
-                        />
-                        
-                    </View>
-                </View>
-                <ScrollView 
-                    style={styles.sroll}
-                    contentContainerStyle={styles.contenido}
-                >
-                    <View style={estilosGlobales.pantallaActualContainer}>
-                        <Text style={estilosGlobales.textoPantalla}>Tus Movimientos</Text>
-                    </View>
-                    <ScrollView style={estilosGlobales.contenidoScreen}>
-                        <View style={styles.contentInput}>
-                            <TextInput
-                                style={styles.input}
-                                placeholder='  Buscar'
-                            
-                            />
-                        </View>
-                        <View style={styles.filtro}>
-                            <Text style={styles.texto}>Filtrar por </Text>
-                            <TextInput
-                                placeholder='Categoria'
-                                style={styles.inputCategoria}
-                            />
-                        </View>
-                        <View style={styles.contentMovimientos}>
-                            <ScrollView
-                                style={styles.movimientos}
-                                showsVerticalScrollIndicator={true}
-                                nestedScrollEnabled={true}
-                                keyboardShouldPersistTaps="handled"
 
-                            >
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                                <View style={styles.movimiento}>
-                                    <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
-                                        <Text>Depósito</Text>
-                                    </View>
-                                    <View style={styles.cantidadesMovimiento}>
-                                        <Text style={styles.cantidadGasto}>
-                                            +$5,000.00
-                                        </Text>
-                                        <Text style={[styles.texto, styles.categoriaGasto]}>
-                                            Carro
-                                        </Text>
-                                    </View>
-                                    <ImageBackground
-                                        source={require('../assets/iconoTresPuntos.png')}
-                                        style={styles.tresPuntos}
-                                        resizeMode='contain'
-                                    />
-                                </View>
-                            </ScrollView>
-                        </View>
-                    
-                        <View style={styles.contentGrafica}>
-                            <ImageBackground
-                                style={styles.grafica}
-                                source={require('../assets/graficaTransacciones.png')}
-                                resizeMode='cover'
-                            />
-                        </View>
-                    </ScrollView>
-                </ScrollView>
-                <View style={estilosGlobales.footer}>
-                    <ImageBackground
-                        source={require('../assets/iconoCategorias.png')}
-                        style={styles.icono}
-                    />
-                    <ImageBackground
-                        source={require('../assets/iconoHome.png')}
-                        style={styles.icono}
-                    />
-                    <ImageBackground
-                        source={require('../assets/iconoMas.png')}
-                        style={styles.icono}
-                    />
-                    <ImageBackground
-                        source={require('../assets/iconoPerfil.png')}
-                        style={styles.icono}
-                    />
+export default function Transacciones(){
+  
+    return (
+        <View style={estilosGlobales.container}>
+            <View style={estilosGlobales.cabecera}>
+                <View style={estilosGlobales.tituloContent}>
+                    <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
                 </View>
-                <Button
-                    title='Volver'
-                    onPress={()=>setVolver(true)}
+                <View style={estilosGlobales.logoContent}>
+                    <ImageBackground
+                        source={require('../assets/LogoAhorraSinFondo.png')}
+                        style={estilosGlobales.logo}
+                    />
+                    
+                </View>
+            </View>
+            <ScrollView 
+                style={styles.sroll}
+                contentContainerStyle={styles.contenido}
+            >
+                <View style={estilosGlobales.pantallaActualContainer}>
+                    <Text style={estilosGlobales.textoPantalla}>Tus Movimientos</Text>
+                </View>
+                <ScrollView style={estilosGlobales.contenidoScreen}>
+                    <View style={styles.contentInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='  Buscar'
+                        
+                        />
+                    </View>
+                    <View style={styles.filtro}>
+                        <Text style={styles.texto}>Filtrar por </Text>
+                        <TextInput
+                            placeholder='Categoria'
+                            style={styles.inputCategoria}
+                        />
+                    </View>
+                    <View style={styles.contentMovimientos}>
+                        <ScrollView
+                            style={styles.movimientos}
+                            showsVerticalScrollIndicator={true}
+                            nestedScrollEnabled={true}
+                            keyboardShouldPersistTaps="handled"
+
+                        >
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={styles.movimiento}>
+                                <View style={styles.descripcionMovimiento}>
+                                    <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                    <Text>Depósito</Text>
+                                </View>
+                                <View style={styles.cantidadesMovimiento}>
+                                    <Text style={styles.cantidadGasto}>
+                                        +$5,000.00
+                                    </Text>
+                                    <Text style={[styles.texto, styles.categoriaGasto]}>
+                                        Carro
+                                    </Text>
+                                </View>
+                                <ImageBackground
+                                    source={require('../assets/iconoTresPuntos.png')}
+                                    style={styles.tresPuntos}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                        </ScrollView>
+                    </View>
+                
+                    <View style={styles.contentGrafica}>
+                        <ImageBackground
+                            style={styles.grafica}
+                            source={require('../assets/graficaTransacciones.png')}
+                            resizeMode='cover'
+                        />
+                    </View>
+                </ScrollView>
+            </ScrollView>
+            <View style={estilosGlobales.footer}>
+                <ImageBackground
+                    source={require('../assets/iconoCategorias.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoHome.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoMas.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoPerfil.png')}
+                    style={styles.icono}
                 />
             </View>
-        )
-    }
+            <Button
+                title='Volver'
+                onPress={()=>setVolver(true)}
+            />
+        </View>
+    )
+
 }
 const styles= StyleSheet.create({
     icono:{
