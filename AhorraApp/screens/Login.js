@@ -1,69 +1,84 @@
 import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animated, Easing, Switch, Pressable,ScrollView   } from 'react-native'
 import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
+import Recuperacion from './Recuperacion'
+import PantallaPrincipal from './PantallaPrincipal';
+import Registro from './Registro'
 export default function Login() {
-  return(
-    <View style={styles.mainContainer}>
-      <ScrollView 
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-      >
-      <View style={estilosGlobales.cabecera}>
-        <View style={estilosGlobales.tituloContent}>
-          <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
-        </View>
-      </View>
-      <View>
-        <ImageBackground
-          source={require('../assets/LogoAhorraSinFondo.png')}
-          style={estilosGlobales.logo}
-        />
-      </View>
-      <View>
-        <Text style={styles.tittle} >Inicia Sesion</Text>
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.text}>Correo Electronico: </Text>
-        <TextInput
-          style={styles.inputs}
-          placeholder='abcd@gmail.com'
-          cursorColor="#24be21ff" 
-        
-        />
-        <Text style={styles.text}>Contraseña: </Text>
-        <TextInput
-          style={styles.inputs}
-          placeholder='********'
-          secureTextEntry={true}
-          cursorColor="#24be21ff" 
-          
-        
-        />
-        <Pressable 
-          style={{alignSelf:'flex-start'}}
-          onPress={()=>setPantalla('Recuperacion')}
-        >
-          <Text style={styles.olvidoContra}>¿Olvidaste tu contraseña?</Text>
-        </Pressable>
-        
-    
-      </View>
-      <Pressable onPress={()=>setPantalla('dashboard')} 
-        style={styles.button}
-      >
-        <Text style={styles.textbutton}>Iniciar Sesion</Text>
-      </Pressable>
-      
-      <Pressable onPress={()=>setPantalla('Registro')} >
-        <Text style={styles.resitroText}>¿No tienes una cuenta? Registrate</Text>
-      </Pressable>
-      </ScrollView>
-      
-      <View  style={styles.footer}>
-        <Text style={styles.footerText}>Derechos Reservados</Text>
-      </View>
-    </View> 
-  )
+  const[pantalla, setPantalla]=useState('login');
+  switch(pantalla){
+    case 'Recuperacion':
+      return <Recuperacion/>
+    case 'PantallaPrincipal':
+      return <PantallaPrincipal/>
+    case 'Registro':
+      return <Registro/>
+    case 'login':
+        default:
+          return(
+            <View style={styles.mainContainer}>
+              <ScrollView 
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+              >
+              <View style={estilosGlobales.cabecera}>
+                <View style={estilosGlobales.tituloContent}>
+                  <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
+                </View>
+              </View>
+              <View>
+                <ImageBackground
+                  source={require('../assets/LogoAhorraSinFondo.png')}
+                  style={estilosGlobales.logo}
+                />
+              </View>
+              <View>
+                <Text style={styles.tittle} >Inicia Sesion</Text>
+              </View>
+              <View style={styles.container}>
+                <Text style={styles.text}>Correo Electronico: </Text>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder='abcd@gmail.com'
+                  cursorColor="#24be21ff" 
+                
+                />
+                <Text style={styles.text}>Contraseña: </Text>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder='********'
+                  secureTextEntry={true}
+                  cursorColor="#24be21ff" 
+                  
+                
+                />
+                <Pressable 
+                  style={{alignSelf:'flex-start'}}
+                  onPress={()=>setPantalla('Recuperacion')}
+                >
+                  <Text style={styles.olvidoContra}>¿Olvidaste tu contraseña?</Text>
+                </Pressable>
+                
+            
+              </View>
+              <Pressable onPress={()=>setPantalla('PantallaPrincipal')} 
+                style={styles.button}
+              >
+                <Text style={styles.textbutton}>Iniciar Sesion</Text>
+              </Pressable>
+              
+              <Pressable onPress={()=>setPantalla('Registro')} >
+                <Text style={styles.resitroText}>¿No tienes una cuenta? Registrate</Text>
+              </Pressable>
+              </ScrollView>
+              
+              <View  style={styles.footer}>
+                <Text style={styles.footerText}>Derechos Reservados</Text>
+              </View>
+            </View> 
+          )
+  }
+
 }
 
 const styles = StyleSheet.create({
