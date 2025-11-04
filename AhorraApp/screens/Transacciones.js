@@ -31,6 +31,29 @@ export default function Transacciones(){
                            
                         />
                     </View>
+                    <View style={styles.filtro}>
+                        <Text style={styles.texto}>Filtrar por </Text>
+                        <TextInput
+                            placeholder='Categoria'
+                            style={[styles.inputCategoria, styles.texto]}
+                        />
+                    </View>
+                    <ScrollView style={styles.movimientos}>
+                        <View style={styles.movimiento}>
+                            <View style={styles.descripcionMovimiento}>
+                                <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
+                                <Text>Depósito</Text>
+                            </View>
+                            <View style={styles.cantidadesMovimiento}>
+                                <Text style={styles.cantidadGasto}>
+                                    $5,000
+                                </Text>
+                                <Text style={[styles.texto, styles.categoriaGasto]}>
+                                    Carro
+                                </Text>
+                            </View>
+                        </View>
+                    </ScrollView>
                    
 
                     
@@ -78,4 +101,59 @@ const styles= StyleSheet.create({
         marginTop: 5,
         color: 'gray',
     },
+    filtro:{
+        width: '90%',
+        height: 50,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        paddingLeft: 15,
+        paddingTop: 15,
+        
+    },
+    texto:{
+        color: 'gray',
+    },
+    inputCategoria:{
+        borderBottomWidth: 2,
+        borderBottomColor: '#E0EDFF',
+        marginLeft: 10,
+        paddingLeft: 5,
+    },
+    movimientos:{
+        width: '90%',
+        borderRadius: 5,
+        borderColor: 'black',
+        // borderWidth: 2,
+        alignSelf: 'center',
+        backgroundColor: '#E0EDFF',
+       
+    },
+    movimiento:{
+        width: '95%',
+        height: 60,
+        alignSelf: 'center',
+        paddingTop: 7,
+        flexDirection: 'row',
+        
+    },  
+    fecha:{
+        fontSize: 10,
+    },
+    descripcionMovimiento:{
+        width: '50%',
+    },
+    cantidadesMovimiento:{
+        width: '50%',
+        alignItems: 'end',
+        justifyContent: 'center',
+        paddingRight: 12,
+    },
+    cantidadGasto:{
+        fontSize: 20,
+        color: '#4CAA1D',
+    },
+    categoriaGasto:{
+        fontSize: 10,
+    },
+
 });

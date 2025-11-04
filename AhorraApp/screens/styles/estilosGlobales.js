@@ -68,5 +68,5 @@ export default StyleSheet.create({
     contenidoScreen:{
         backgroundColor:'#C0D5F2',
         width: '90%',
-    }
+    },
 })
