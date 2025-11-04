@@ -38,7 +38,9 @@ export default function Transacciones(){
                             style={[styles.inputCategoria, styles.texto]}
                         />
                     </View>
-                    <ScrollView style={styles.movimientos}>
+                    <ScrollView
+                    style={styles.movimientos}
+                    >
                         <View style={styles.movimiento}>
                             <View style={styles.descripcionMovimiento}>
                                 <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
@@ -230,7 +232,12 @@ export default function Transacciones(){
                             />
                         </View>
                     </ScrollView>
-                    
+                    <ImageBackground
+                        style={styles.grafica}
+                        source={require('../assets/graficaTransacciones.png')}
+                    />
+
+                
                    
 
                     
@@ -311,6 +318,7 @@ const styles= StyleSheet.create({
         height: 60,
         alignSelf: 'center',
         paddingTop: 10,
+        paddingLeft: 10,
         flexDirection: 'row',
         
     },  
@@ -339,5 +347,11 @@ const styles= StyleSheet.create({
         height: 30,
         alignSelf: 'center',
         
+    },
+    grafica:{
+        marginTop: 20,
+        width:'90%',
+        height: 100,
+        alignSelf: 'center',
     },
 });
