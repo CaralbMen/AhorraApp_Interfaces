@@ -2,30 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CategoriasScreen from './screens/Categorias';
+import CategoriasScreen from './screens/CategoriasScreen';
 import DetalleDeMovimientoScreen from './screens/DetalleDeMovimiento';
-import EditarCategoriaScreen from './screens/EditarCategoria';
+import EditarCategoriaScreen from './screens/EditarCategoriaScreen';
 import EgresosScreen from './screens/EgresosScreen';
 import IngresosScreen from './screens/IngresosScreen';
 import Login from './screens/Login';
 import PantallaPrincipal from './screens/PantallaPrincipal';
-<<<<<<< HEAD
-import Categorias from './screens/Categorias';
-import EditarCategoria from './screens/EditarCategoria';
-import IngresosScreen from './screens/IngresosScreen';
 
 export default function App() {
-  //return <IngresosScreen/>
-  return <Login/>
-  //return <Egresoss></Egresoss>
-=======
-import RecuperacionScreen from './screens/Recuperacion';
-import RegistroScreen from './screens/Registro';
-import Transacciones from './screens/Transacciones';
-
-
-export default function App() {
-  const[pantalla, setPantalla]= useState('main');
+  const [pantalla, setPantalla]= useState('main');
   
     switch(pantalla){
       case 'Categorias':
@@ -68,7 +54,6 @@ export default function App() {
             </View>
           )
     }
->>>>>>> 7902a8cdd22de758863c9e22f799706c489ffb49
 }
 const styles = StyleSheet.create({
   container: {
