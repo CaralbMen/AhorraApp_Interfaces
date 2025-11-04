@@ -9,6 +9,7 @@ import EgresosScreen from './screens/EgresosScreen';
 import IngresosScreen from './screens/IngresosScreen';
 import Login from './screens/Login';
 import PantallaPrincipal from './screens/PantallaPrincipal';
+import ActualizarInfoScreen from './screens/ActualizarInfoScreen';
 
 export default function App() {
   const [pantalla, setPantalla]= useState('main');
@@ -34,6 +35,8 @@ export default function App() {
         return <RegistroScreen/>
       case 'Transacciones':
         return <Transacciones/>
+      case 'ActualizarInfo':
+        return <ActualizarInfoScreen/>
       case 'main':
         default:
           return(
@@ -49,7 +52,7 @@ export default function App() {
                 <Button title='Recuperacion' onPress={()=>setPantalla('Recuperacion')}/>
                 <Button title='Registro' onPress={()=>setPantalla('Registro')}/>
                 <Button title='Transacciones' onPress={()=>setPantalla('Transacciones')}/>
-
+                <Button title='Actualizar Info' onPress={()=>setPantalla('ActualizarInfo')}/>
               </View>
             </View>
           )
