@@ -48,23 +48,19 @@ export default function PantallaPrincipal({ navigation }) {
                 </ScrollView>
             </View>
             <View style={estilosGlobales.footer}>
-                <ImageBackground
-                    source={require('../assets/iconoCategorias.png')}
-                    style={styles.icono}
-                />
-                <ImageBackground
-                    source={require('../assets/iconoHome.png')}
-                    style={styles.icono}
-                />
-                <ImageBackground
-                    source={require('../assets/iconoMas.png')}
-                    style={styles.icono}
-                />
-                <ImageBackground
-                    source={require('../assets/iconoPerfil.png')}
-                    style={styles.icono}
-                />
-            </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Principal')}>
+                      <Text style={styles.footerIcon}>🏠</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Categorias')}>
+                      <Text style={styles.footerIcon}>📂</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Text style={styles.footerIcon}>➕</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Text style={styles.footerIcon}>👤</Text>
+                    </TouchableOpacity>
+                  </View>
         </SafeAreaView>
     );
 }
