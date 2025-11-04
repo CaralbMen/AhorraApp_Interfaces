@@ -1,4 +1,4 @@
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native'
 import React, {useState} from 'react'
 
 export default function EgresosScreen() {

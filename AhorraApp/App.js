@@ -10,7 +10,7 @@ import IngresosScreen from './screens/IngresosScreen';
 import Login from './screens/Login';
 import PantallaPrincipal from './screens/PantallaPrincipal';
 import ActualizarInfoScreen from './screens/ActualizarInfoScreen';
-
+import Transacciones from './screens/Transacciones';
 export default function App() {
   const [pantalla, setPantalla]= useState('main');
   
