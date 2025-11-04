@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
-=======
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
->>>>>>> 7902a8cdd22de758863c9e22f799706c489ffb49
 import { SafeAreaView } from 'react-native-safe-area-context';
 import estilosGlobales from './styles/estilosGlobales';
 
