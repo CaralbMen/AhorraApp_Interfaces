@@ -6,6 +6,8 @@ import Transacciones from './screens/Transacciones';
 import Login from './screens/Login';
 import PantallaPrincipal from './screens/PantallaPrincipal';
 import Egresoss from './screens/EgresosScreen';
+import Categorias from './screens/Categorias';
+import EditarCategoria from './screens/EditarCategoria';
 
 export default function App() {
   return <Login/>
