@@ -3,6 +3,7 @@ import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
 import Transacciones from '../screens/Transacciones';
 import Registro from '../screens/Registro';
+import Recuperacion from '../screens/Recuperacion';
 export default function Login() {
   const[pantalla, setPantalla]= useState('login');
 
@@ -11,6 +12,8 @@ export default function Login() {
       return <Transacciones/>
     case 'Registro':
       return <Registro/>
+    case 'Recuperacion':
+      return <Recuperacion/>
     case 'login':
       default:
         return(
@@ -52,6 +55,7 @@ export default function Login() {
               />
               <Pressable 
                 style={{alignSelf:'flex-start'}}
+                onPress={()=>setPantalla('Recuperacion')}
               >
                <Text style={styles.olvidoContra}>¿Olvidaste tu contraseña?</Text>
               </Pressable>
