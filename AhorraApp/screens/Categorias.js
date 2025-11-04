@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import estilosGlobales from './styles/estilosGlobales.js';
 
@@ -63,19 +63,23 @@ export default function CategoriasScreen({ navigation }) {
         </View>
 
       <View style={estilosGlobales.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Principal')}>
-          <Text style={styles.footerIcon}>🏠</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Categorias')}>
-          <Text style={styles.footerIcon}>📂</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.footerIcon}>➕</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.footerIcon}>👤</Text>
-        </TouchableOpacity>
-      </View>
+                <ImageBackground
+                    source={require('../assets/iconoCategorias.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoHome.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoMas.png')}
+                    style={styles.icono}
+                />
+                <ImageBackground
+                    source={require('../assets/iconoPerfil.png')}
+                    style={styles.icono}
+                />
+            </View>
     </SafeAreaView>
   );
 }

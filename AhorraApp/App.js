@@ -2,9 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Transacciones from './screens/Transacciones';
+import CategoriasScreen from './screens/Categorias';
+import DetalleDeMovimientoScreen from './screens/DetalleDeMovimiento';
+import EditarCategoriaScreen from './screens/EditarCategoria';
+import EgresosScreen from './screens/EgresosScreen';
+import IngresosScreen from './screens/IngresosScreen';
 import Login from './screens/Login';
 import PantallaPrincipal from './screens/PantallaPrincipal';
+<<<<<<< HEAD
 import Categorias from './screens/Categorias';
 import EditarCategoria from './screens/EditarCategoria';
 import IngresosScreen from './screens/IngresosScreen';
@@ -13,6 +18,57 @@ export default function App() {
   //return <IngresosScreen/>
   return <Login/>
   //return <Egresoss></Egresoss>
+=======
+import RecuperacionScreen from './screens/Recuperacion';
+import RegistroScreen from './screens/Registro';
+import Transacciones from './screens/Transacciones';
+
+
+export default function App() {
+  const[pantalla, setPantalla]= useState('main');
+  
+    switch(pantalla){
+      case 'Categorias':
+        return <CategoriasScreen/>
+      case 'DetalleMovimiento':
+        return <DetalleDeMovimientoScreen/>
+      case 'EditarCategorias':
+        return <EditarCategoriaScreen/>
+      case 'Egresos':
+        return <EgresosScreen/>
+      case 'Ingresos':
+        return <IngresosScreen/>
+      case 'Login':
+        return <Login/>
+      case 'PantallaPrincipal':
+        return <PantallaPrincipal/>
+      case 'Recuperacion':
+        return <RecuperacionScreen/>
+      case 'Registro':
+        return <RegistroScreen/>
+      case 'Transacciones':
+        return <Transacciones/>
+      case 'main':
+        default:
+          return(
+            <View style={styles.container}>
+              <View>
+                <Button title='Categorias' onPress={()=>setPantalla('Categorias')}/>
+                <Button title='Detalle de Movimiento' onPress={()=>setPantalla('DetalleMovimiento')}/>
+                <Button title='Editar Categorias' onPress={()=>setPantalla('EditarCategorias')}/>
+                <Button title='Egresos' onPress={()=>setPantalla('Egresos')}/>
+                <Button title='Ingresos' onPress={()=>setPantalla('Ingresos')}/>
+                <Button title='Login' onPress={()=>setPantalla('Login')}/>
+                <Button title='Pantalla Principal' onPress={()=>setPantalla('PantallaPrincipal')}/>
+                <Button title='Recuperacion' onPress={()=>setPantalla('Recuperacion')}/>
+                <Button title='Registro' onPress={()=>setPantalla('Registro')}/>
+                <Button title='Transacciones' onPress={()=>setPantalla('Transacciones')}/>
+
+              </View>
+            </View>
+          )
+    }
+>>>>>>> 7902a8cdd22de758863c9e22f799706c489ffb49
 }
 const styles = StyleSheet.create({
   container: {
