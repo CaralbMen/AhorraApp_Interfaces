@@ -5,7 +5,24 @@ import Transacciones from '../screens/Transacciones'
 import Login from '../screens/Login'
 
 export default function Registro() {
-  const [pantalla, setPantalla] = useState('registro')
+  const [pantalla, setPantalla] = useState('registro');
+  const [nombre,setNombre]=useState('');
+  const [correo,setCorreo]=useState('');
+  const [telefono,setTelefono]=useState('');
+  const [contraseña,setContraseña]=useState('');
+
+  const validarRegistro=()=>{
+    if(nombre.trim()==='' || correo.trim()==='' || telefono.trim()==='' || contraseña.trim()===''){
+      alert('Error, Por favor complete todos los campos');
+    } else if(!/\S+@\S+\.\S+/.test(correo)){
+      alert('Error, Por favor ingrese un correo valido');
+    }else if(telefono.trim().length < 10){
+      alert('Error, Por favor ingrese un numero de telefono valido');
+    }else if(contraseña.trim().length < 6){
+      alert('Error, La contraseña debe tener al menos 6 caracteres');
+    }
+
+  }
 
   switch (pantalla) {
     case 'dashboard':
@@ -43,6 +60,8 @@ export default function Registro() {
                 style={styles.inputs}
                 placeholder="Juan Pérez"
                 cursorColor="#24be21ff"
+                value={nombre}
+                onChangeText={setNombre}
               />
 
               <Text style={styles.text}>Correo electrónico:</Text>
@@ -50,6 +69,8 @@ export default function Registro() {
                 style={styles.inputs}
                 placeholder="abcd@gmail.com"
                 cursorColor="#24be21ff"
+                value={correo}
+                onChangeText={setCorreo}
               />
 
               <Text style={styles.text}>Telefono:</Text>
@@ -58,6 +79,8 @@ export default function Registro() {
                 placeholder="+52 1 234 567 8901"
                 keyboardType="phone-pad"
                 cursorColor="#24be21ff"
+                value={telefono}
+                onChangeText={setTelefono}
               />
 
               <Text style={styles.text}>Contraseña:</Text>
@@ -66,12 +89,15 @@ export default function Registro() {
                 placeholder="********"
                 secureTextEntry={true}
                 cursorColor="#24be21ff"
+                value={contraseña}
+                onChangeText={setContraseña}
               />
             </View>
 
             <Pressable
               onPress={() => setPantalla('dashboard')}
               style={styles.button}
+              onPressIn={validarRegistro}
             >
               <Text style={styles.textbutton}>Registrarse</Text>
             </Pressable>

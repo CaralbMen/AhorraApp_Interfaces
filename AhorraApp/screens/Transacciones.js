@@ -268,10 +268,6 @@ export default function Transacciones(){
                     style={styles.icono}
                 />
             </View>
-            <Button
-                title='Volver'
-                onPress={()=>setVolver(true)}
-            />
         </View>
     )
 

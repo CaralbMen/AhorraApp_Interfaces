@@ -6,6 +6,21 @@ import PantallaPrincipal from './PantallaPrincipal';
 import Registro from './Registro'
 export default function Login() {
   const[pantalla, setPantalla]=useState('login');
+  const [correo, Setcorreo]=useState('');
+  const [contraseña, Setcontraseña]=useState('');
+
+  const validacionAlerta=()=>{
+    if(correo.trim()==='' && contraseña.trim()===''){
+      alert('Error, Por favor complete todos los campos');
+    }else if(correo.trim()=== ''){
+      alert('Error, Por favor ingrese el correo');
+    }else if(contraseña.trim()===''){
+      alert('Error, Por favor ingrese la contraseña');
+    }
+    else if(!/\S+@\S+\.\S+/.test(correo)){
+      alert('Error, Por favor ingrese un correo valido');
+    }
+  }
   switch(pantalla){
     case 'Recuperacion':
       return <Recuperacion/>
@@ -41,6 +56,8 @@ export default function Login() {
                   style={styles.inputs}
                   placeholder='abcd@gmail.com'
                   cursorColor="#24be21ff" 
+                  value={correo}
+                  onChangeText={Setcorreo}
                 
                 />
                 <Text style={styles.text}>Contraseña: </Text>
@@ -49,6 +66,8 @@ export default function Login() {
                   placeholder='********'
                   secureTextEntry={true}
                   cursorColor="#24be21ff" 
+                  value={contraseña}
+                  onChangeText={Setcontraseña}
                   
                 
                 />
@@ -63,6 +82,7 @@ export default function Login() {
               </View>
               <Pressable onPress={()=>setPantalla('PantallaPrincipal')} 
                 style={styles.button}
+                onPressIn={validacionAlerta}
               >
                 <Text style={styles.textbutton}>Iniciar Sesion</Text>
               </Pressable>
