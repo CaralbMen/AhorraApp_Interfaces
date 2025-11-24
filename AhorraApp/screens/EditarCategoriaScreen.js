@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import estilosGlobales from './styles/estilosGlobales.js';
 
 export default function EditarCategoriaScreen({ navigation }) {
@@ -15,7 +15,7 @@ export default function EditarCategoriaScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={estilosGlobales.container}>
+    <SafeAreaProvider style={estilosGlobales.container}>
       <View style={estilosGlobales.cabecera}>
         <View style={estilosGlobales.tituloContent}>
           <Text style={estilosGlobales.titulo}>Ahorra+ App</Text>
@@ -106,7 +106,7 @@ export default function EditarCategoriaScreen({ navigation }) {
           <Text style={styles.footerIcon}>👤</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

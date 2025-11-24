@@ -1,4 +1,4 @@
-import { Button, Text, View, ImageBackground, ScrollView, StyleSheet, TextInput } from 'react-native'
+import { Button, Text, View, ImageBackground, ScrollView, StyleSheet, TextInput, Pressable } from 'react-native'
 import React, { Component, useState } from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
 
@@ -241,12 +241,16 @@ export default function Transacciones(){
                         </ScrollView>
                     </View>
                 
-                    <View style={styles.contentGrafica}>
+                    {/* <View style={styles.contentGrafica}>
                         <ImageBackground
                             style={styles.grafica}
                             source={require('../assets/graficaTransacciones.png')}
                             resizeMode='cover'
+                            imageStyle={{borderRadius:10}}
                         />
+                    </View> */}
+                    <View style={styles.botonesGraficas}>
+                        <Pressable >Ver Graficas</Pressable>
                     </View>
                 </ScrollView>
             </ScrollView>
@@ -268,12 +272,19 @@ export default function Transacciones(){
                     style={styles.icono}
                 />
             </View>
-           
         </View>
     )
-
 }
 const styles= StyleSheet.create({
+    botonesGraficas:{
+        alignSelf:'center',
+        alignItems:'center',
+        justifyContent: 'center',
+        width: '90%',
+        height: '30%',
+        marginTop:15,
+        backgroundColor: 'red',
+    },
     icono:{
         width: 35,
         height: 35,
@@ -380,8 +391,10 @@ const styles= StyleSheet.create({
         height: 230,
         alignSelf: 'center',
         marginTop: 20,
-        borderRadius: 10,
+        //borderRadius: 10,
         marginBottom:10,
+        overflow: 'hidden',
+        resizeMode: 'cover',
     },
     grafica:{
       flex: 1,

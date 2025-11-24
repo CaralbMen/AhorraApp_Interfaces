@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import estilosGlobales from './styles/estilosGlobales';
 
 const movimientosData = [
@@ -13,7 +13,7 @@ const movimientosData = [
 
 export default function PantallaPrincipal({ navigation }) {
     return (
-        <SafeAreaView style={estilosGlobales.container}>
+        <SafeAreaProvider style={estilosGlobales.container}>
             <View style={estilosGlobales.cabecera}>
                 <View style={estilosGlobales.tituloContent}>
                     <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
@@ -61,7 +61,7 @@ export default function PantallaPrincipal({ navigation }) {
                       <Text style={styles.footerIcon}>👤</Text>
                     </TouchableOpacity>
                   </View>
-        </SafeAreaView>
+        </SafeAreaProvider>
     );
 }
 

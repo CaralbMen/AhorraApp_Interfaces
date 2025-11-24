@@ -146,9 +146,7 @@ export default function IngresosScreen() {
           >
             <Text style={styles.btnText}>Confirmar</Text>
           </TouchableOpacity>
-        </View>
-
-      
+        </View>      
       </ScrollView>
     </KeyboardAvoidingView>
   );

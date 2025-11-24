@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground, Platform } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import estilosGlobales from './styles/estilosGlobales.js';
 
 const categoriasData = [
@@ -9,19 +9,23 @@ const categoriasData = [
 ];
 
 const confirmarEliminar = (nombre) => {
-  Alert.alert(
-    'Eliminar Categoría',
-    `¿Estás seguro de eliminar la categoría "${nombre}"?`,
-    [
-      { text: 'Cancelar', style: 'cancel' },
-      { text: 'Eliminar', onPress: () => console.log('Eliminado'), style: 'destructive' },
-    ]
-  );
+  if(Platform.OS==='web'){
+    window.alert('Estás seguro de eliminar la categoría "${nombre}?')
+  }else{
+    Alert.alert(
+      'Eliminar Categoría',
+      `¿Estás seguro de eliminar la categoría "${nombre}"?`,
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Eliminar', onPress: () => console.log('Eliminado'), style: 'destructive' },
+      ]
+    );
+  }
 };
 
 export default function CategoriasScreen({ navigation }) {
   return (
-    <SafeAreaView style={estilosGlobales.container}>
+    <SafeAreaProvider style={estilosGlobales.container}>
         <View style={estilosGlobales.cabecera}>
             <View style={estilosGlobales.tituloContent}>
                 <Text style={estilosGlobales.titulo}>Ahorra+ App</Text>
@@ -76,7 +80,7 @@ export default function CategoriasScreen({ navigation }) {
                 <Text style={styles.footerIcon}>👤</Text>
               </TouchableOpacity>
             </View>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
