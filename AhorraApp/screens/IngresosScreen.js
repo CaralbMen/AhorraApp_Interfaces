@@ -148,8 +148,7 @@ export default function IngresosScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* pequeño footer para debug en web */}
-        <Text style={styles.versionText}>Modo web / móvil — prueba en consola</Text>
+      
       </ScrollView>
     </KeyboardAvoidingView>
   );
