@@ -47,20 +47,6 @@ export default function PantallaPrincipal({ navigation }) {
                     </TouchableOpacity>
                 </ScrollView>
             </View>
-            <View style={estilosGlobales.footer}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Principal')}>
-                      <Text style={styles.footerIcon}>🏠</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Categorias')}>
-                      <Text style={styles.footerIcon}>📂</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <Text style={styles.footerIcon}>➕</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <Text style={styles.footerIcon}>👤</Text>
-                    </TouchableOpacity>
-                  </View>
         </SafeAreaProvider>
     );
 }

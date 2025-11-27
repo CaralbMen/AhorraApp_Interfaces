@@ -3,7 +3,8 @@ import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
 import Recuperacion from './Recuperacion'
 import PantallaPrincipal from './PantallaPrincipal';
-import Registro from './Registro'
+import Registro from './Registro';
+import stackScreens from './stackScreens';
 export default function Login() {
   const[pantalla, setPantalla]=useState('login');
   const [correo, Setcorreo]=useState('');
@@ -25,7 +26,7 @@ export default function Login() {
     case 'Recuperacion':
       return <Recuperacion/>
     case 'PantallaPrincipal':
-      return <PantallaPrincipal/>
+      return <stackScreens/>
     case 'Registro':
       return <Registro/>
     case 'login':

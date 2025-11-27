@@ -92,7 +92,7 @@ export default function EditarCategoriaScreen({ navigation }) {
         </ScrollView>
       </View>
 
-      <View style={estilosGlobales.footer}>
+      {/* <View style={estilosGlobales.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('Principal')}>
           <Text style={styles.footerIcon}>🏠</Text>
         </TouchableOpacity>
@@ -105,7 +105,7 @@ export default function EditarCategoriaScreen({ navigation }) {
         <TouchableOpacity>
           <Text style={styles.footerIcon}>👤</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </SafeAreaProvider>
   );
 }
