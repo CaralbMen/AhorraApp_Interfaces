@@ -8,17 +8,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Ionicons} from '@expo/vector-icons';
 
 //Importacion de las pantallas para usarlas en el menucito de abajo
-import CategoriasScreen from './screens/CategoriasScreen';
-import DetalleDeMovimientoScreen from './screens/DetalleDeMovimiento';
-import EditarCategoriaScreen from './screens/EditarCategoriaScreen';
-import EgresosScreen from './screens/EgresosScreen';
-import IngresosScreen from './screens/IngresosScreen';
-import Login from './screens/Login';
-import PantallaPrincipal from './screens/PantallaPrincipal';
-import RecuperacionScreen from './screens/Recuperacion';
-import RegistroScreen from './screens/Registro';
-import ActualizarInfoScreen from './screens/ActualizarInfoScreen';
-import Transacciones from './screens/Transacciones';
+import CategoriasScreen from './CategoriasScreen';
+import DetalleDeMovimientoScreen from './DetalleDeMovimiento';
+import EditarCategoriaScreen from './EditarCategoriaScreen';
+import EgresosScreen from './EgresosScreen';
+import IngresosScreen from './IngresosScreen';
+import Login from './Login';
+import PantallaPrincipal from './PantallaPrincipal';
+import RecuperacionScreen from './Recuperacion';
+import RegistroScreen from './Registro';
+import ActualizarInfoScreen from './ActualizarInfoScreen';
+import Transacciones from './Transacciones';
 
 //Creamos el cosito para la barra de hasta abajo
 const Menucito= createBottomTabNavigator();
@@ -72,6 +72,7 @@ export default function stackScreens() {
   // }
   // Chambeamos a partir de aqui
   return(
+   
     <NavigationContainer>
       <Menucito.Navigator
         initialRouteName="Principal"
