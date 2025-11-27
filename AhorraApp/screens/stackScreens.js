@@ -24,55 +24,8 @@ import Transacciones from './Transacciones';
 const Menucito= createBottomTabNavigator();
 
 //Function principal
-export default function stackScreens() {
-  //No eliminamos nada de lo que habia por cualquier cosa, solo lo comentamos y reducimos para que no estorbe
-  // const [pantalla, setPantalla]= useState('main');
-  // switch(pantalla){
-  //   case 'Categorias':
-  //     return <CategoriasScreen/>
-  //   case 'DetalleMovimiento':
-  //     return <DetalleDeMovimientoScreen/>
-  //   case 'EditarCategorias':
-  //     return <EditarCategoriaScreen/>
-  //   case 'Egresos':
-  //     return <EgresosScreen/>
-  //   case 'Ingresos':
-  //     return <IngresosScreen/>
-  //   case 'Login':
-  //     return <Login/>
-  //   case 'PantallaPrincipal':
-  //     return <PantallaPrincipal/>
-  //   case 'Recuperacion':
-  //     return <RecuperacionScreen/>
-  //   case 'Registro':
-  //     return <RegistroScreen/>
-  //   case 'Transacciones':
-  //     return <Transacciones/>
-  //   case 'ActualizarInfo':
-  //     return <ActualizarInfoScreen/>
-  //   case 'main':
-  //     default:
-  //       return(
-  //         <View style={styles.container}>
-  //           <View>
-  //             <Button title='Categorias' onPress={()=>setPantalla('Categorias')}/>
-  //             <Button title='Detalle de Movimiento' onPress={()=>setPantalla('DetalleMovimiento')}/>
-  //             <Button title='Editar Categorias' onPress={()=>setPantalla('EditarCategorias')}/>
-  //             <Button title='Egresos' onPress={()=>setPantalla('Egresos')}/>
-  //             <Button title='Ingresos' onPress={()=>setPantalla('Ingresos')}/>
-  //             <Button title='Login' onPress={()=>setPantalla('Login')}/>
-  //             <Button title='Pantalla Principal' onPress={()=>setPantalla('PantallaPrincipal')}/>
-  //             <Button title='Recuperacion' onPress={()=>setPantalla('Recuperacion')}/>
-  //             <Button title='Registro' onPress={()=>setPantalla('Registro')}/>
-  //             <Button title='Transacciones' onPress={()=>setPantalla('Transacciones')}/>
-  //             <Button title='Actualizar Info' onPress={()=>setPantalla('ActualizarInfo')}/>
-  //           </View>
-  //         </View>
-  //       )
-  // }
-  // Chambeamos a partir de aqui
+export default function StackScreens() {
   return(
-   
     <NavigationContainer>
       <Menucito.Navigator
         initialRouteName="Principal"
@@ -91,8 +44,8 @@ export default function stackScreens() {
             }
             return <Ionicons name={nombreIcono} size={size} color={color}/>
           },
-          tabBarActivateTintColor: '#007BFF',
-          tabBarInctivateTintColor: '#9c36d2ff',
+          tabBarActiveTintColor: '#007BFF',
+          tabBarInctiveTintColor: '#9c36d2ff',
           tabBarStyle:{
             paddingBottom: 5,
             height: 60,
