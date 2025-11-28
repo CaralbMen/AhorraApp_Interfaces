@@ -4,7 +4,6 @@ import Login from "./screens/Login"
 import React, { useEffect } from 'react';
 import { iniciarBaseDeDatos } from './database/db';
 
-<<<<<<< Updated upstream
 //Function principal
 export default function App() {
   useEffect(() => {
@@ -12,7 +11,6 @@ export default function App() {
   }, []);
   return <Login/>
 }
-=======
 // //Function principal
 // export default function App() {
 //   //No eliminamos nada de lo que habia por cualquier cosa, solo lo comentamos y reducimos para que no estorbe
@@ -95,9 +93,9 @@ export default function App() {
 //       </Menucito.Navigator>
 //     </NavigationContainer>
 //   );
-  useEffect(()=>{
-    databaseService.init();
-    databaseService.seed();
-  },[]);
-  return <Login/>
-}
+//   useEffect(()=>{
+//     databaseService.init();
+//     databaseService.seed();
+//   },[]);
+//   return <Login/>
+// }
