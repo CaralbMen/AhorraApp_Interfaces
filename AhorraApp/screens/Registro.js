@@ -1,7 +1,7 @@
 import { Text, StyleSheet, View, TextInput, Pressable, ImageBackground, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales'
-import Transacciones from '../screens/Transacciones'
+// import Transacciones from '../screens/principal/Transacciones'
 import Login from '../screens/Login'
 
 export default function Registro() {

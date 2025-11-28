@@ -1,8 +1,8 @@
 import { View, Text, ImageBackground, StyleSheet, Button } from 'react-native'
 import React, {useState} from 'react'
-import estilosGlobales from './styles/estilosGlobales'
+import estilosGlobales from '../styles/estilosGlobales'
 
-export default function DetalleDeMovimiento() {
+export default function DetalleDeMovimiento({navigation}) {
     
     return (
         <View style={estilosGlobales.container}>
@@ -12,7 +12,7 @@ export default function DetalleDeMovimiento() {
                 </View>
                 <View style={estilosGlobales.logoContent}>
                     <ImageBackground
-                        source={require('../assets/LogoAhorraSinFondo.png')}
+                        source={require('../../assets/LogoAhorraSinFondo.png')}
                         style={estilosGlobales.logo}
                     />
                 </View>
@@ -49,32 +49,7 @@ export default function DetalleDeMovimiento() {
                     <Text style={styles.usadoLabel}>al límite</Text>
                 </View>
                 
-            </View>
-
-
-
-
-
-                
-            <View style={estilosGlobales.footer}>
-                <ImageBackground
-                    source={require('../assets/iconoCategorias.png')}
-                    style={styles.icono}
-                />
-                <ImageBackground
-                    source={require('../assets/iconoHome.png')}
-                    style={styles.icono}
-                />
-                <ImageBackground
-                    source={require('../assets/iconoMas.png')}
-                    style={styles.icono}
-                />
-                <ImageBackground
-                    source={require('../assets/iconoPerfil.png')}
-                    style={styles.icono}
-                />
-            </View>
-            
+            </View>            
         </View>
     )
 

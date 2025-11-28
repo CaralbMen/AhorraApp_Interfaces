@@ -2,7 +2,7 @@ import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animat
 import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
 import Recuperacion from './Recuperacion'
-import PantallaPrincipal from './PantallaPrincipal';
+import PantallaPrincipal from './principal/PantallaPrincipal';
 import Registro from './Registro';
 import StackScreens from './stackScreens';
 export default function Login() {
