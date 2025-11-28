@@ -2,12 +2,18 @@ import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animat
 import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
 import Recuperacion from './Recuperacion'
+<<<<<<< Updated upstream
 import PantallaPrincipal from './principal/PantallaPrincipal';
 import Registro from './Registro';
 import StackScreens from './stackScreens';
 import { iniciarSesion } from '../controllers/usuarioController';
 
 export default function Login() {
+=======
+import PantallaPrincipal from './PantallaPrincipal';
+import Registro from './Registro'
+export default function Login({ navigation, onAutenticado }) {
+>>>>>>> Stashed changes
   const[pantalla, setPantalla]=useState('login');
   const [correo, Setcorreo]=useState('');
   const [contraseña, Setcontraseña]=useState('');
@@ -42,7 +48,15 @@ export default function Login() {
       Alert.alert('Error', e.message);
     }
   }
+<<<<<<< Updated upstream
 
+=======
+  async function manejarIniciarSesion() {
+    // valida tus campos / consulta BD local
+    // si ok:
+    onAutenticado && onAutenticado();
+  }
+>>>>>>> Stashed changes
   switch(pantalla){
     case 'Recuperacion':
       return <Recuperacion/>
