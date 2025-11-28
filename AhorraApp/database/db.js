@@ -1,6 +1,8 @@
-import * as SQLite from 'expo-sqlite';
-const db= SQLite.openDatabase('ahorraApp.db');
 
+import * as SQLite from 'expo-sqlite';
+const db = SQLite.openDatabaseAsync('ahorraApp.db');
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export const getDB=()=>db;
 const databaseService={
     init:()=>{
         db.transaction(tx=>{

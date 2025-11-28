@@ -16,7 +16,7 @@ export async function registrarUsuario({ nombre, correo, telefono, contrasena })
 export async function iniciarSesion(correo, contrasena) {
   if (!correo || !contrasena) throw new Error('Complete los campos');
   const fila = await obtenerPrimero(
-    'SELECT * FROM usuarios WHERE correo = ? AND contrasena = ? LIMIT 1',
+    'SELECT * FROM usuarios WHERE email = ? AND password = ? LIMIT 1',
     [correo.trim().toLowerCase(), contrasena]
   );
   if (!fila) throw new Error('Credenciales inválidas');
@@ -25,7 +25,7 @@ export async function iniciarSesion(correo, contrasena) {
 
 export async function existeCorreo(correo) {
   const fila = await obtenerPrimero(
-    'SELECT id FROM usuarios WHERE correo = ? LIMIT 1',
+    'SELECT id FROM usuarios WHERE email = ? LIMIT 1',
     [correo.trim().toLowerCase()]
   );
   return !!fila;

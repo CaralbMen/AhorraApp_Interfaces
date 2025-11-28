@@ -1,8 +1,8 @@
 import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animated, Easing, Switch, Pressable,ScrollView   } from 'react-native'
-import React, { useState, useEffect, use} from 'react'
+import React, { useState, useEffect} from 'react'
 import estilosGlobales from './styles/estilosGlobales';
 import Recuperacion from './Recuperacion'
-import PantallaPrincipal from './principal/PantallaPrincipal';
+// import PantallaPrincipal from './principal/PantallaPrincipal';
 import Registro from './Registro';
 import StackScreens from './stackScreens';
 import { iniciarSesion } from '../controllers/usuarioController';
@@ -50,7 +50,7 @@ export default function Login() {
     case 'Registro':
       return <Registro/>
     case 'login':
-        default:
+        // default:
           return(
             <View style={styles.mainContainer}>
               <ScrollView 
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   footer: {
-    position: 'absolute',
+    // position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
