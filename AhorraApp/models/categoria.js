@@ -1,10 +1,11 @@
 export class Categoria{
-    constructor(id, nombre, descripcion, presupuesto, periodo){
+    constructor(id, nombre, descripcion, presupuesto, periodo, id_usuario){
         this.id=id;
         this.nombre=nombre;
         this.descripcion=descripcion;
         this.presupuesto=presupuesto;
         this.periodo=periodo;
+        this.id_usuario= id_usuario;
     }
     static validarNombre(nombre) {
     if (!nombre || nombre.trim().length === 0) {
