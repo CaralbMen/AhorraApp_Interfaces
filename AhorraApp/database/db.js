@@ -1,33 +1,41 @@
-import { openDatabaseAsync } from 'expo-sqlite';
+import * as SQLite from 'expo-sqlite';
+const db= SQLite.openDatabase('ahorraApp.db');
 
-let db;
-
-export async function iniciarBaseDeDatos() {
-  if (!db) db = await openDatabaseAsync('ahorra.db');
-  await db.execAsync(`CREATE TABLE IF NOT EXISTS usuarios (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre TEXT NOT NULL,
-    correo TEXT UNIQUE NOT NULL,
-    telefono TEXT,
-    contrasena TEXT NOT NULL
-  );`);
-}
-
-function asegurarBD() {
-  if (!db) throw new Error('BD no inicializada');
-}
-
-export function ejecutar(sql, params = []) {
-  asegurarBD();
-  return db.runAsync(sql, params);
-}
-
-export function obtenerPrimero(sql, params = []) {
-  asegurarBD();
-  return db.getFirstAsync(sql, params);
-}
-
-export function obtenerTodos(sql, params = []) {
-  asegurarBD();
-  return db.getAllAsync(sql, params);
+const databaseService={
+    init:()=>{
+        db.transaction(tx=>{
+            //Para los usuarios
+            tx.executeSql(
+                `CREATE TABLE IF NOT EXISTS usuarios(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nombre TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    telefono TEXT,
+                    password TEXT NOT NULL
+                );`
+            );
+            tx.executeSql(
+                `CREATE TABLE IF NOT EXISTS categorias(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nombre TEXT NOT NULL UNIQUE,
+                    descripcion TEXT NOT NULL,
+                    presupuesto REAL NOT NULL,
+                    periodo TEXT
+                )`
+            );
+            // constructor(id, descripcion, monto, fecha, tipo, categoria){
+            tx.executeSql(
+                `CREATE TABLE IF NOT EXISTS movimientos(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    descripcion TEXT NOT NULL,
+                    monto REAL NOT NULL,
+                    fecha TEXT NOT NULL,
+                    tipo TEXT NOT NULL,
+                    categoria_id INTEGER NOT NULL,
+                    FOREIGN KEY(categoria_id) REFERENCES categorias(id)
+                );`
+            );
+            
+        })
+    }
 }

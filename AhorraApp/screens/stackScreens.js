@@ -1,6 +1,7 @@
 //Importacion de componentes
 import { StyleSheet, View, Button, Text } from 'react-native';
 import React, {useState} from 'react'
+// import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 //Importacion de componenetes para el navigation
 import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
@@ -9,16 +10,16 @@ import {Ionicons} from '@expo/vector-icons';
 
 //Importacion de las pantallas para usarlas en el menucito de abajo
 import CategoriasScreen from './CategoriasScreen';
-import DetalleDeMovimientoScreen from './DetalleDeMovimiento';
+// import DetalleDeMovimientoScreen from './DetalleDeMovimiento';
 import EditarCategoriaScreen from './EditarCategoriaScreen';
 import EgresosScreen from './EgresosScreen';
 import IngresosScreen from './IngresosScreen';
 import Login from './Login';
-import PantallaPrincipal from './PantallaPrincipal';
+import stackPrincipal from './principal/stackPrincipal';
 import RecuperacionScreen from './Recuperacion';
 import RegistroScreen from './Registro';
 import ActualizarInfoScreen from './ActualizarInfoScreen';
-import Transacciones from './Transacciones';
+// import Transacciones from './Transacciones';
 
 //Creamos el cosito para la barra de hasta abajo
 const Menucito= createBottomTabNavigator();
@@ -44,15 +45,33 @@ export default function StackScreens() {
             }
             return <Ionicons name={nombreIcono} size={size} color={color}/>
           },
-          tabBarActiveTintColor: '#007BFF',
-          tabBarInctiveTintColor: '#9c36d2ff',
+          tabBarActiveTintColor: '#463774ff',
+          tabBarInactiveTintColor: '#8876B8',
           tabBarStyle:{
             paddingBottom: 5,
             height: 60,
+            backgroundColor: '#eaf8fbff',
+            borderColor:'#eaf8fbff',
           },
         })}
       >
-        <Menucito.Screen name={"Principal"} component={PantallaPrincipal}/>
+        <Menucito.Screen name={"Principal"} component={stackPrincipal}
+          options={({route})=>{
+            const nombreRuta= getFocusedRouteNameFromRoute(route)??'Principal';
+            const ocultar=['Transacciones', 'DetalleDeMovimiento', 'Graficas'];
+            return{
+              tabBarStyle: ocultar.includes(nombreRuta)?{
+                display:'none'}:
+                { 
+                    paddingBottom: 5,
+                    height: 60,
+                    backgroundColor: '#eaf8fbff',
+                    borderColor:'#eaf8fbff',
+                }
+              };
+            
+          }}
+        />
         <Menucito.Screen name={'Categorias'} component={CategoriasScreen}/>
         <Menucito.Screen name={'Agregar'} component={EditarCategoriaScreen}/>
         <Menucito.Screen name={'Perfil'} component={ActualizarInfoScreen}/>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Pressable } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import estilosGlobales from './styles/estilosGlobales';
+import estilosGlobales from '../styles/estilosGlobales';
 
 const movimientosData = [
     {id: '1', desc: 'Depósito', monto: '+ $5,000.00', fecha: 'Feb 31, 2025', tipo: 'ingreso'},
@@ -32,7 +32,7 @@ export default function PantallaPrincipal({ navigation }) {
                     </View>
                     <Text style={styles.movimientosTitle}>Últimos movimientos</Text>
                     {movimientosData.map((item) => (
-                        <View key={item.id} style={styles.itemContainer}>
+                        <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento')}>
                             <View>
                                 <Text style={styles.itemDescripcion}>{item.desc}</Text>
                                 <Text style={styles.itemFecha}>{item.fecha}</Text>
@@ -40,9 +40,9 @@ export default function PantallaPrincipal({ navigation }) {
                             <Text style={[styles.itemMonto, item.tipo === 'ingreso' ? styles.ingreso : styles.egreso,]}>
                                 {item.monto}
                             </Text>
-                        </View>
+                        </Pressable>
                     ))}
-                    <TouchableOpacity style={styles.verTodasButton}>
+                    <TouchableOpacity style={styles.verTodasButton} onPress={()=>navigation.navigate('Transacciones')}>
                         <Text style={styles.verTodasText}>Ver todas...</Text>
                     </TouchableOpacity>
                 </ScrollView>
