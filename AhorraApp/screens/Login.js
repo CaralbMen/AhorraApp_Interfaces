@@ -2,26 +2,61 @@ import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animat
 import React, { useState, useEffect, use} from 'react'
 import estilosGlobales from '../screens/styles/estilosGlobales';
 import Recuperacion from './Recuperacion'
+<<<<<<< Updated upstream
 import PantallaPrincipal from './principal/PantallaPrincipal';
 import Registro from './Registro';
 import StackScreens from './stackScreens';
+import { iniciarSesion } from '../controllers/usuarioController';
+
 export default function Login() {
+=======
+import PantallaPrincipal from './PantallaPrincipal';
+import Registro from './Registro'
+export default function Login({ navigation, onAutenticado }) {
+>>>>>>> Stashed changes
   const[pantalla, setPantalla]=useState('login');
   const [correo, Setcorreo]=useState('');
   const [contraseña, Setcontraseña]=useState('');
 
-  const validacionAlerta=()=>{
+  function validacionAlerta(){
     if(correo.trim()==='' && contraseña.trim()===''){
-      alert('Error, Por favor complete todos los campos');
-    }else if(correo.trim()=== ''){
-      alert('Error, Por favor ingrese el correo');
-    }else if(contraseña.trim()===''){
-      alert('Error, Por favor ingrese la contraseña');
+      Alert.alert('Error','Complete todos los campos');
+      return false;
     }
-    else if(!/\S+@\S+\.\S+/.test(correo)){
-      alert('Error, Por favor ingrese un correo valido');
+    if(correo.trim()=== ''){
+      Alert.alert('Error','Ingrese el correo');
+      return false;
+    }
+    if(contraseña.trim()===''){
+      Alert.alert('Error','Ingrese la contraseña');
+      return false;
+    }
+    if(!/\S+@\S+\.\S+/.test(correo)){
+      Alert.alert('Error','Correo inválido');
+      return false;
+    }
+    return true;
+  }
+
+  async function manejarLogin() {
+    try {
+      if (!validacionAlerta()) return;
+      const usuario = await iniciarSesion(correo, contraseña);
+      Alert.alert('Bienvenido', usuario.nombre);
+      setPantalla('PantallaPrincipal'); // ya te lleva a la principal
+    } catch (e) {
+      Alert.alert('Error', e.message);
     }
   }
+<<<<<<< Updated upstream
+
+=======
+  async function manejarIniciarSesion() {
+    // valida tus campos / consulta BD local
+    // si ok:
+    onAutenticado && onAutenticado();
+  }
+>>>>>>> Stashed changes
   switch(pantalla){
     case 'Recuperacion':
       return <Recuperacion/>
@@ -81,23 +116,23 @@ export default function Login() {
                 
             
               </View>
-              <Pressable onPress={()=>setPantalla('PantallaPrincipal')} 
-                style={styles.button}
-                onPressIn={validacionAlerta}
-              >
-                <Text style={styles.textbutton}>Iniciar Sesion</Text>
-              </Pressable>
+              <Pressable 
+                 style={styles.button}
+                onPress={manejarLogin}
+               >
+                 <Text style={styles.textbutton}>Iniciar Sesion</Text>
+               </Pressable>
               
-              <Pressable onPress={()=>setPantalla('Registro')} >
-                <Text style={styles.resitroText}>¿No tienes una cuenta? Registrate</Text>
-              </Pressable>
-              </ScrollView>
+               <Pressable onPress={()=>setPantalla('Registro')} >
+                 <Text style={styles.resitroText}>¿No tienes una cuenta? Registrate</Text>
+               </Pressable>
+               </ScrollView>
               
-              <View  style={styles.footer}>
-                <Text style={styles.footerText}>Derechos Reservados</Text>
-              </View>
-            </View> 
-          )
+               <View  style={styles.footer}>
+                 <Text style={styles.footerText}>Derechos Reservados</Text>
+               </View>
+             </View> 
+           )
   }
 
 }

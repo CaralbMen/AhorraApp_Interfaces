@@ -1,10 +1,12 @@
 import { Text, StyleSheet, View, TextInput, Pressable, ImageBackground, ScrollView } from 'react-native'
 import React, { useState } from 'react'
-import estilosGlobales from '../screens/styles/estilosGlobales'
-// import Transacciones from '../screens/principal/Transacciones'
-import Login from '../screens/Login'
+import { Alert } from 'react-native';
+import { registrarUsuario, existeCorreo } from '../controllers/usuarioController';
+import estilosGlobales from './styles/estilosGlobales';
+import { validarCorreoRealEstricto } from '../controllers/correoController';
+import Login from './Login';
 
-export default function Registro() {
+export default function Registro({ navigation }) {
   const [pantalla, setPantalla] = useState('registro');
   const [nombre,setNombre]=useState('');
   const [correo,setCorreo]=useState('');
@@ -13,23 +15,45 @@ export default function Registro() {
 
   const validarRegistro=()=>{
     if(nombre.trim()==='' || correo.trim()==='' || telefono.trim()==='' || contraseña.trim()===''){
-      alert('Error, Por favor complete todos los campos');
-    } else if(!/\S+@\S+\.\S+/.test(correo)){
-      alert('Error, Por favor ingrese un correo valido');
-    }else if(telefono.trim().length < 10){
-      alert('Error, Por favor ingrese un numero de telefono valido');
-    }else if(contraseña.trim().length < 6){
-      alert('Error, La contraseña debe tener al menos 6 caracteres');
+      Alert.alert('Error','Complete todos los campos'); return false;
+    } 
+    if(!/\S+@\S+\.\S+/.test(correo)){
+      Alert.alert('Error','Correo inválido'); return false;
     }
+    const soloDigitos = telefono.replace(/\D/g,'');
+    if(soloDigitos.length < 10){
+      Alert.alert('Error','Teléfono inválido (mínimo 10 dígitos)'); return false;
+    }
+    if(contraseña.trim().length < 6){
+      Alert.alert('Error','La contraseña debe tener al menos 6 caracteres'); return false;
+    }
+    return true;
+  }
 
+  async function manejarRegistro() {
+    try {
+      if (!validarRegistro()) return;
+      if (await existeCorreo(correo)) {
+        Alert.alert('Error','El correo ya está registrado');
+        return;
+      }
+      const resultado = await validarCorreoRealEstricto(correo);
+      if (!resultado.ok) {
+        Alert.alert('Correo inválido', resultado.mensaje);
+        return;
+      }
+      await registrarUsuario({ nombre, correo, telefono, contrasena: contraseña });
+      Alert.alert('Registro exitoso','Tu cuenta fue creada.');
+      setPantalla('login');
+      navigation?.navigate?.('Login');
+    } catch (e) {
+      Alert.alert('Error', e.message);
+    }
   }
 
   switch (pantalla) {
-    case 'dashboard':
-      return <Transacciones />
     case 'login':
-      return <Login />
-    case 'registro':
+      return <Login/>  // mostrar la pantalla de Login
     default:
       return (
         <View style={styles.mainContainer}>
@@ -37,16 +61,15 @@ export default function Registro() {
             contentContainerStyle={styles.scrollContainer}
             showsVerticalScrollIndicator={false}
           >
-            <View style={estilosGlobales.cabecera}>
-              <View style={estilosGlobales.tituloContent}>
-                <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
+            <View style={estilosGlobales?.cabecera}>
+              <View style={estilosGlobales?.tituloContent}>
+                <Text style={estilosGlobales?.titulo}>Ahorra + App</Text>
               </View>
             </View>
-
             <View>
               <ImageBackground
                 source={require('../assets/LogoAhorraSinFondo.png')}
-                style={estilosGlobales.logo}
+                style={estilosGlobales?.logo}
               />
             </View>
 
@@ -95,9 +118,8 @@ export default function Registro() {
             </View>
 
             <Pressable
-              onPress={() => setPantalla('dashboard')}
+              onPress={manejarRegistro}
               style={styles.button}
-              onPressIn={validarRegistro}
             >
               <Text style={styles.textbutton}>Registrarse</Text>
             </Pressable>
