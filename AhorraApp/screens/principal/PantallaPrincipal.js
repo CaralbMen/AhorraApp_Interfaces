@@ -1,56 +1,41 @@
-import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Pressable, ActivityIndicator } from 'react-native';
+import React, {useContext, useEffect} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Pressable } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import estilosGlobales from '../styles/estilosGlobales';
-import { obtenerUltimosMovimientos, obtenerBalanceTotal } from '../controllers/FinanceController';
-
+import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
+import { AuthContext } from '../../context/AuthContext';
 export default function PantallaPrincipal({ navigation }) {
-    const [movimientos, setMovimientos] = useState([]);
-    const [balance, setBalance] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const USUARIO_ID = 1;
-
-    useFocusEffect(
-        useCallback(() => {
-            cargarDatos();
-        }, [])
-    );
-
-    const cargarDatos = async () => {
-        try {
-            const movs = await obtenerUltimosMovimientos(USUARIO_ID);
-            const bal = await obtenerBalanceTotal(USUARIO_ID);
-            
-            setMovimientos(movs);
-            setBalance(bal);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setLoading(false);
+    const { usuario }= useContext(AuthContext);
+    const [movimientosData, setMovimientosData]=React.useState([]);
+    useEffect(()=>{
+        async function cargarMovimientos(){
+            if(usuario){
+                const datos= await obtenerMovimientosPorUsuario(usuario.id_usuario);
+                setMovimientosData(datos);
+            }
         }
-    };
-
-    if (loading) {
-        return (
-            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                <ActivityIndicator size="large" color="#007BFF"/>
-            </View>
-        );
-    }
-
+        cargarMovimientos();
+    },[usuario]);
     return (
         <SafeAreaProvider style={estilosGlobales.container}>
             <View style={estilosGlobales.cabecera}>
                 <View style={estilosGlobales.tituloContent}>
                     <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
                 </View>
-                <View style={estilosGlobales.logoContent}>
-                    <Text style={[estilosGlobales.logo, styles.logoTexto]}>$</Text>
+                {/* <View style={estilosGlobales.logoContent}>
+                    <Text style={[estilosGlobales.logo, StyleSheet.logoTexto]}>$</Text>
+                </View> */}
+                 <View style={estilosGlobales.logoContent}>
+                    <ImageBackground
+                        source={require('../../assets/LogoAhorraSinFondo.png')}
+                        style={estilosGlobales.logo}
+                    />
                 </View>
             </View>
+
             <View style={estilosGlobales.pantallaActualContainer}>
-                <Text style={estilosGlobales.textoPantalla}>¡Hola Usuario!</Text>
+                <Text style={estilosGlobales.textoPantalla}>¡Hola {usuario?.nombre}!</Text>
             </View>
             <View style={[estilosGlobales.contenidoScreen, {flex:1}]}>
                 <ScrollView>
@@ -58,27 +43,19 @@ export default function PantallaPrincipal({ navigation }) {
                         <Text style={styles.totalDisponible}>Total disponible: ${balance}</Text>
                     </View>
                     <Text style={styles.movimientosTitle}>Últimos movimientos</Text>
-                    
-                    {movimientos.length === 0 ? (
-                        <Text style={{textAlign: 'center', marginTop: 20, color: '#888'}}>No hay movimientos recientes.</Text>
-                    ) : (
-                        movimientos.map((item) => (
-                            <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento', { id: item.id })}>
-                                <View>
-                                    <Text style={styles.itemDescripcion}>{item.descripcion}</Text>
-                                    <Text style={styles.itemFecha}>{item.fecha}</Text>
-                                    <Text style={{fontSize: 10, color: '#aaa'}}>{item.categoria}</Text>
-                                </View>
-                                <Text style={[
-                                    styles.itemMonto, 
-                                    (item.tipo === 'ingreso' || item.tipo === 'Depósito') ? styles.ingreso : styles.egreso
-                                ]}>
-                                    {(item.tipo === 'ingreso' || item.tipo === 'Depósito') ? '+' : '-'} ${item.monto}
-                                </Text>
-                            </Pressable>
-                        ))
-                    )}
 
+
+                    {movimientosData.map((item) => (
+                        <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento')}>
+                            <View>
+                                <Text style={styles.itemDescripcion}>{item.desc}</Text>
+                                <Text style={styles.itemFecha}>{item.fecha}</Text>
+                            </View>
+                            <Text style={[styles.itemMonto, item.tipo === 'ingreso' ? styles.ingreso : styles.egreso,]}>
+                                {item.monto}
+                            </Text>
+                        </Pressable>
+                    ))}
                     <TouchableOpacity style={styles.verTodasButton} onPress={()=>navigation.navigate('Transacciones')}>
                         <Text style={styles.verTodasText}>Ver todas...</Text>
                     </TouchableOpacity>

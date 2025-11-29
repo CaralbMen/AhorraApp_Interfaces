@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground, Platform } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import estilosGlobales from './styles/estilosGlobales.js';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground, Platform, Pressable } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import estilosGlobales from '../styles/estilosGlobales.js';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const categoriasData = [
   { id: '1', nombre: 'Alimentos', desc: 'Comida en general', presupuesto: '$3,500.00', periodo: 'Semanal' },
@@ -25,17 +26,25 @@ const confirmarEliminar = (nombre) => {
 
 export default function CategoriasScreen({ navigation }) {
   return (
-    <SafeAreaProvider style={estilosGlobales.container}>
+    <SafeAreaProvider >
+      <SafeAreaView style={estilosGlobales.container}>
         <View style={estilosGlobales.cabecera}>
             <View style={estilosGlobales.tituloContent}>
                 <Text style={estilosGlobales.titulo}>Ahorra+ App</Text>
             </View>
+           
             <View style={estilosGlobales.logoContent}>
-                <Text style={[estilosGlobales.logo, styles.logoTexto]}>💲</Text>
+                <ImageBackground
+                    source={require('../../assets/LogoAhorraSinFondo.png')}
+                    style={estilosGlobales.logo}
+                />
             </View>
         </View>
         <View style={estilosGlobales.pantallaActualContainer}>
             <Text style={estilosGlobales.textoPantalla}>Tus Categorías</Text>
+            <Pressable style={styles.agregarCategoria} onPress={()=>navigation.navigate('CrearCategoriaScreen')}>
+              <Ionicons name="add-circle-outline" size={37} color='#8876B8'></Ionicons>
+            </Pressable>
         </View>
         
         <View style={[estilosGlobales.contenidoScreen, { flex: 1 }]}>
@@ -54,8 +63,8 @@ export default function CategoriasScreen({ navigation }) {
                     <Text style={styles.cardPeriodicidad}>{item.periodo}</Text>
                 </View>
                 <View style={styles.cardBotones}>
-                    <TouchableOpacity onPress={() => navigation.navigate('EditarCategoria')}>
-                        <Text style={styles.cardIcon}>✏️</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('EditarCategoriaScreen')}>
+                        <Text>✏️</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => confirmarEliminar(item.nombre)}>
                         <Text style={styles.cardIcon}>🗑️</Text>
@@ -66,12 +75,30 @@ export default function CategoriasScreen({ navigation }) {
             </ScrollView>
         </View>
 
-    
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  plus:{
+    width: '100%',
+    height: '100%',
+    fontSize: 40,
+    textAlign: 'center',
+    
+  },
+  agregarCategoria:{
+    width:40,
+    height:40,
+    // backgroundColor:'#E0EDFF',
+    alignSelf:'flex-end',
+    marginBottom:4,
+    marginRight:10,
+    borderRadius: '50%',
+    justifyContent:'center',
+    alignItems: 'center',
+  },
   logoTexto: { fontSize: 40, textAlign: 'center' },
   titleContainer: {
     padding: 15,

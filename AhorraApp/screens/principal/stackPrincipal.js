@@ -5,7 +5,7 @@ import Transacciones from './Transacciones';
 import Graficas from './graficas';
 const Stack= createNativeStackNavigator();
 
-export default function stackPrincipal(){
+export default function stackPrincipal({usuario}){
     return(
         <Stack.Navigator>
             <Stack.Screen

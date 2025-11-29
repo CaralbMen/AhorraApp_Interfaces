@@ -1,9 +1,22 @@
 import { Button, Text, View, ImageBackground, ScrollView, StyleSheet, TextInput, Pressable } from 'react-native'
-import React, { Component, useState } from 'react'
 import estilosGlobales from '../styles/estilosGlobales';
-// import estilosGlobales from '../styles/estilosGlobales';
+import React, {useContext, useEffect} from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
 export default function Transacciones({navigation}){
-  
+    const { usuario }= useContext(AuthContext);
+    const [movimientosData, setMovimientosData]=React.useState([]);
+    useEffect(()=>{
+        async function cargarMovimientos(){
+            if(usuario){
+                console.log('Cargando movimientos para el usuario ID:', usuario.id_usuario);
+                const datos= await obtenerMovimientosPorUsuario(usuario.id_usuario);
+                console.log('Movimientos cargados:', datos);  
+                setMovimientosData(datos);
+            }
+        }
+        cargarMovimientos();
+    },[usuario]);
     return (
         <View style={estilosGlobales.container}>
             <View style={estilosGlobales.cabecera}>
@@ -17,6 +30,7 @@ export default function Transacciones({navigation}){
                     />
                 </View>
             </View>
+
             <ScrollView 
                 style={styles.sroll}
                 contentContainerStyle={styles.contenido}
@@ -47,7 +61,29 @@ export default function Transacciones({navigation}){
                             keyboardShouldPersistTaps="handled"
 
                         >
-                            <Pressable style={styles.movimiento} onPress={()=>navigation.navigate('DetalleDeMovimiento')}>
+                            {movimientosData.map((item)=>(
+                                <Pressable key={item.id} style={styles.movimiento} onPress={()=>navigation.navigate('DetalleDeMovimiento')}>
+                                    <View style={styles.descripcionMovimiento}>
+                                        <Text style={[styles.fecha, styles.texto]}>{item.fecha}</Text>
+                                        <Text>{item.tipo}</Text>
+                                    </View>
+                                    <View style={styles.cantidadesMovimiento}>
+                                        <Text style={[styles.cantidadGasto, styles.categoriaGasto, item.tipo==='ingreso'? {color: '#4CAA1D'} : {color: '#D13434'}]}>
+                                            {item.tipo==='ingreso' ? '+' : '-'}$
+                                            {item.monto}
+                                        </Text>
+                                        <Text style={[styles.texto]}>
+                                            {item.categoria_nombre || 'Sin categoría'}
+                                        </Text>
+                                    </View>
+                                    <ImageBackground
+                                        source={require('../../assets/iconoTresPuntos.png')}
+                                        style={styles.tresPuntos}
+                                        resizeMode='contain'
+                                    />
+                                </Pressable>
+                            ))}
+                            {/* <Pressable style={styles.movimiento} onPress={()=>navigation.navigate('DetalleDeMovimiento')}>
                                 <View style={styles.descripcionMovimiento}>
                                     <Text style={[styles.fecha, styles.texto]}>Marzo 1, 20256</Text>
                                     <Text>Depósito</Text>
@@ -84,12 +120,14 @@ export default function Transacciones({navigation}){
                                     style={styles.tresPuntos}
                                     resizeMode='contain'
                                 />
-                            </View>
+                            </View> */}
                         </ScrollView>
                     </View>
                 
                     <View style={styles.botonesGraficas}>
-                        <Pressable style={styles.botonVerGraficas} onPress={()=>navigation.navigate('Graficas')}>Ver Graficas</Pressable>
+                        <Pressable style={styles.botonVerGraficas} onPress={()=>navigation.navigate('Graficas')}>
+                            <Text style={styles.textoPressable}>Ver Graficas</Text>
+                        </Pressable>
                     </View>
                 </ScrollView>
             </ScrollView>
@@ -98,6 +136,11 @@ export default function Transacciones({navigation}){
     )
 }
 const styles= StyleSheet.create({
+    textoPressable:{
+        textAlign: 'center',
+        color: 'white',
+        fontWeight:'bold',
+    },
     botonVerGraficas:{
         width:'100%',
         height: '100%',
@@ -109,9 +152,11 @@ const styles= StyleSheet.create({
         alignItems:'center',
         justifyContent: 'center',
         width: '90%',
-        height: '15%',
+        height: 50,
         marginTop:15,
         backgroundColor: 'red',
+        borderRadius: 15,
+        backgroundColor: '#94b8ebff'
     },
     icono:{
         width: 35,
@@ -130,7 +175,7 @@ const styles= StyleSheet.create({
     contentInput:{
         width: '100%',
         height: 35,
-        justifyContent: 'end',
+        justifyContent: 'flex-end',
         
     },
     input:{
@@ -168,7 +213,7 @@ const styles= StyleSheet.create({
     },
     contentMovimientos:{
         width:'90%',
-        height: 550,
+        height: 500,
         alignSelf:'center',
     },
     movimientos:{
@@ -184,6 +229,7 @@ const styles= StyleSheet.create({
         height: 60,
         alignSelf: 'center',
         paddingTop: 10,
+        paddingBottom: 2,
         paddingLeft: 10,
         flexDirection: 'row',
         borderBottomColor: 'white',
@@ -198,9 +244,8 @@ const styles= StyleSheet.create({
     cantidadesMovimiento:{
         // backgroundColor: 'red',
         width: '40%',
-        alignItems: 'end',
+        alignItems: 'felx-end',
         justifyContent: 'center',
-        paddingRight: 12,
     },
     cantidadGasto:{
         fontSize: 20,
@@ -213,7 +258,7 @@ const styles= StyleSheet.create({
         width: 40,
         height: 30,
         alignSelf: 'center',
-        
+        marginBottom: 12,
     },
     contentGrafica:{
         width: '90%',

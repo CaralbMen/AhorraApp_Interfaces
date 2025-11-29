@@ -9,17 +9,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Ionicons} from '@expo/vector-icons';
 
 //Importacion de las pantallas para usarlas en el menucito de abajo
-import CategoriasScreen from './CategoriasScreen';
-// import DetalleDeMovimientoScreen from './DetalleDeMovimiento';
-import EditarCategoriaScreen from './EditarCategoriaScreen';
+import CategoriasScreen from './categorias/CategoriasScreen';
 import EgresosScreen from './EgresosScreen';
 import IngresosScreen from './IngresosScreen';
 import Login from './Login';
 import stackPrincipal from './principal/stackPrincipal';
+import stackCategorias from './categorias/stackCategorias';
 import RecuperacionScreen from './Recuperacion';
 import RegistroScreen from './Registro';
 import ActualizarInfoScreen from './ActualizarInfoScreen';
-// import Transacciones from './Transacciones';
 
 //Creamos el cosito para la barra de hasta abajo
 const Menucito= createBottomTabNavigator();
@@ -72,8 +70,8 @@ export default function StackScreens() {
             
           }}
         />
-        <Menucito.Screen name={'Categorias'} component={CategoriasScreen}/>
-        <Menucito.Screen name={'Agregar'} component={EditarCategoriaScreen}/>
+        <Menucito.Screen name={'Categorias'} component={stackCategorias}/>
+        <Menucito.Screen name={'Agregar'} component={IngresosScreen}/>
         <Menucito.Screen name={'Perfil'} component={ActualizarInfoScreen}/>
       </Menucito.Navigator>
     </NavigationContainer>
