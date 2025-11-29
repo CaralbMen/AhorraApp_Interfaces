@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import estilosGlobales from './styles/estilosGlobales.js';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import estilosGlobales from '../styles/estilosGlobales.js';
 
 export default function EditarCategoriaScreen({ navigation }) {
   const [nombre, setNombre] = useState('Alimentos');
@@ -15,7 +15,8 @@ export default function EditarCategoriaScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaProvider style={estilosGlobales.container}>
+    <SafeAreaProvider >
+      <SafeAreaView style={estilosGlobales.container}>
       <View style={estilosGlobales.cabecera}>
         <View style={estilosGlobales.tituloContent}>
           <Text style={estilosGlobales.titulo}>Ahorra+ App</Text>
@@ -92,20 +93,8 @@ export default function EditarCategoriaScreen({ navigation }) {
         </ScrollView>
       </View>
 
-      {/* <View style={estilosGlobales.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Principal')}>
-          <Text style={styles.footerIcon}>🏠</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Categorias')}>
-          <Text style={styles.footerIcon}>📂</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.footerIcon}>➕</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.footerIcon}>👤</Text>
-        </TouchableOpacity>
-      </View> */}
+     
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }

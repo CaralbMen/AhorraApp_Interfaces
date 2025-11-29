@@ -49,14 +49,18 @@ export default StyleSheet.create({
         width: '90%',
         height: 80,
         marginTop: 10,
-        justifyContent:'flex-end',
+        justifyContent:'center',
+        alignItems: 'center',
         backgroundColor: '#C0D5F2',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         paddingBottom: 8,
         paddingLeft: 8,
+        paddingTop: 20,
         borderBottomColor: '#E0EDFF',
         borderBottomWidth: 4,
+        flexDirection: 'row',
+        gap: 10,
     },
     textoPantalla:{
         color: 'gray',
@@ -66,6 +70,8 @@ export default StyleSheet.create({
         width: '80%',
         borderRadius: 10,
         textAlign: 'center',
+        height: 40,
+    
     },
     contenidoScreen:{
         backgroundColor:'#C0D5F2',
