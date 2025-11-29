@@ -1,9 +1,9 @@
 export default class Usuario {
-  constructor({ id = null, nombre, correo, telefono = '', contrasena }) {
-    this.id = id;
+  constructor({ id_usuario = null, nombre, email, telefono = '', password }) {
+    this.id_usuario = id_usuario;
     this.nombre = nombre;
-    this.correo = correo;
+    this.email = email;
     this.telefono = telefono;
-    this.contrasena = contrasena;
+    this.password = password;
   }
 }

@@ -1,4 +1,3 @@
-
 import * as SQLite from 'expo-sqlite';
 class DatabaseService{
     constructor(){
@@ -147,4 +146,39 @@ export default DatabaseService;
 //     }
     
 // };
-// export default databaseService;
+export const databaseService = new DatabaseService();
+
+/**
+ * Asegura inicialización única.
+ */
+export async function initDatabaseOnce() {
+  if (!databaseService.db) {
+    await databaseService.initialize();
+    await databaseService.seed();
+  }
+}
+
+/**
+ * Ejecutar sentencia (INSERT / UPDATE / DELETE / SELECT).
+ */
+export async function ejecutar(sql, params = []) {
+  await initDatabaseOnce();
+  return databaseService.db.runAsync(sql, params);
+}
+
+/**
+ * Obtener primera fila.
+ */
+export async function obtenerPrimero(sql, params = []) {
+  await initDatabaseOnce();
+  return databaseService.db.getFirstAsync(sql, params);
+}
+
+/**
+ * Obtener todas las filas.
+ */
+export async function obtenerTodos(sql, params = []) {
+  await initDatabaseOnce();
+  const rows = await databaseService.db.getAllAsync(sql, params);
+  return rows || [];
+}

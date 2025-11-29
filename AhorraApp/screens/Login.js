@@ -34,10 +34,13 @@ export default function Login() {
 
   async function manejarLogin() {
     try {
-      if (!validacionAlerta()) return;
+      if (!correo || !contraseña) {
+        Alert.alert('Error', 'Complete todos los campos');
+        return;
+      }
       const usuario = await iniciarSesion(correo, contraseña);
       Alert.alert('Bienvenido', usuario.nombre);
-      setPantalla('PantallaPrincipal'); // ya te lleva a la principal
+      setPantalla('PantallaPrincipal');
     } catch (e) {
       Alert.alert('Error', e.message);
     }

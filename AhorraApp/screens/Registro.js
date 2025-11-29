@@ -32,20 +32,18 @@ export default function Registro({ navigation }) {
 
   async function manejarRegistro() {
     try {
-      if (!validarRegistro()) return;
-      if (await existeCorreo(correo)) {
-        Alert.alert('Error','El correo ya está registrado');
+      // Asumiendo estados: nombre, correo, telefono, contraseña
+      if (!nombre || !correo || !contraseña) {
+        Alert.alert('Error', 'Complete todos los campos');
         return;
       }
-      const resultado = await validarCorreoRealEstricto(correo);
-      if (!resultado.ok) {
-        Alert.alert('Correo inválido', resultado.mensaje);
+      if (await existeCorreo(correo)) {
+        Alert.alert('Error', 'El correo ya está registrado');
         return;
       }
       await registrarUsuario({ nombre, correo, telefono, contrasena: contraseña });
-      Alert.alert('Registro exitoso','Tu cuenta fue creada.');
+      Alert.alert('Registro exitoso', 'Ya puedes iniciar sesión');
       setPantalla('login');
-      navigation?.navigate?.('Login');
     } catch (e) {
       Alert.alert('Error', e.message);
     }

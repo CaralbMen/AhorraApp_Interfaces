@@ -1,20 +1,21 @@
-import databaseService from "./database/db";
-import React, {useEffect} from 'react';
-import Login from "./screens/Login"
-// import React, { useEffect } from 'react';
-// import { iniciarBaseDeDatos } from './database/db';
+import React, { useEffect, useState } from 'react';
+import Login from './screens/Login';
+import { initDatabaseOnce, databaseService } from './database/db';
 
-//Function principal
 export default function App() {
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    (async()=>{
-      try{
-        databaseService.init();
-        await databaseService.seed();
-      }catch(error){
-        console.warn(error);
+    (async () => {
+      try {
+        await initDatabaseOnce();
+        setReady(true);
+      } catch (error) {
+        console.warn('Error BD:', error);
       }
     })();
   }, []);
-  return <Login/>
+
+  if (!ready) return null;
+  return <Login />;
 }
