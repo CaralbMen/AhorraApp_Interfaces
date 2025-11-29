@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { useAuth } from '../context/AuthContext';
 
 export default function ActualizarInfoScreen() {
   const [nombre, setNombre] = useState("");
@@ -7,6 +8,7 @@ export default function ActualizarInfoScreen() {
   const [telefono, setTelefono] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mostrarPass, setMostrarPass] = useState(false);
+  const { updateProfile, user } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -59,7 +61,19 @@ export default function ActualizarInfoScreen() {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.btnGuardar}>
+        <TouchableOpacity
+          style={styles.btnGuardar}
+          onPress={async () => {
+            try {
+              const res = await updateProfile({ nombre, correo, telefono, contrasena });
+              if (res) alert('Información actualizada');
+              else alert('Error al actualizar información');
+            } catch (e) {
+              console.error(e);
+              alert('Error al actualizar información (ver consola)');
+            }
+          }}
+        >
           <Text style={styles.btnText}>Guardar</Text>
         </TouchableOpacity>
       </View>

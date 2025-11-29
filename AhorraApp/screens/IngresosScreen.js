@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import {
   View,
   Text,
@@ -16,6 +17,7 @@ export default function IngresosScreen() {
   const [categoria, setCategoria] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [descripcion, setDescripcion] = useState('');
+  const { user } = useAuth();
 
   useEffect(() => {
     console.log('IngresosScreen montado');
@@ -36,7 +38,26 @@ export default function IngresosScreen() {
       fecha: new Date().toISOString(),
     };
     console.log('Confirmar movimiento:', movimiento);
-    alert('Movimiento guardado (ver consola).');
+    // Intentar guardar en la base de datos
+    (async () => {
+      try {
+        const { agregarMovimiento } = await import('../controllers/movimientoController');
+        const usuario_id = user?.id_usuario || 1;
+        const ok = await agregarMovimiento({
+          descripcion: movimiento.nombre || movimiento.descripcion,
+          monto: movimiento.cantidad,
+          fecha: movimiento.fecha,
+          tipo: movimiento.tipo,
+          categoria_id: 1, // TODO: mapear categoría seleccionada a su id real
+          usuario_id,
+        });
+        if (ok) alert('Movimiento guardado en la BD');
+        else alert('Error al guardar movimiento (revisa consola)');
+      } catch (e) {
+        console.error('Error guardando movimiento:', e);
+        alert('Error al guardar movimiento (ver consola)');
+      }
+    })();
 
     setNombre('');
     setCategoria('');

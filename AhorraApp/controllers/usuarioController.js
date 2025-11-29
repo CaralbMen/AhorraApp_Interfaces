@@ -43,3 +43,15 @@ export async function iniciarSesion(correo, contrasena) {
 
   return new Usuario(fila);
 }
+
+export async function actualizarUsuario(id_usuario, { nombre, correo, telefono, contrasena }) {
+  if (!id_usuario) throw new Error('ID de usuario requerido');
+  const correoNorm = (correo || '').trim().toLowerCase();
+  if (correo && !validarEmail(correoNorm)) throw new Error('Correo inválido');
+  if (contrasena && !validarPassword(contrasena)) throw new Error('La contraseña debe tener mínimo 6 caracteres');
+
+  const sql = `UPDATE usuarios SET nombre = ?, email = ?, telefono = ?, password = ? WHERE id_usuario = ?`;
+  await ejecutar(sql, [nombre, correoNorm, telefono || '', contrasena || '', id_usuario]);
+  const fila = await obtenerPrimero('SELECT * FROM usuarios WHERE id_usuario = ? LIMIT 1', [id_usuario]);
+  return new Usuario(fila);
+}

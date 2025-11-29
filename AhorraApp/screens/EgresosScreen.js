@@ -1,5 +1,6 @@
 import { Text, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native'
 import React, {useState} from 'react'
+import { useAuth } from '../context/AuthContext';
 
 export default function EgresosScreen() {
     const [tipo, setTipo] = useState("Egreso");
@@ -7,6 +8,42 @@ export default function EgresosScreen() {
     const [categoria, setCategoria] = useState("");
     const [cantidad, setCantidad] = useState("");
     const [descripcion, setDescripcion] = useState("");
+    const { user } = useAuth();
+
+    const onConfirm = () => {
+      if (!nombre.trim() || !cantidad) {
+        alert('Completa nombre y cantidad');
+        return;
+      }
+      const movimiento = {
+        tipo: tipo === 'ingreso' ? 'ingreso' : 'egreso',
+        nombre,
+        categoria,
+        cantidad: Number(cantidad) || 0,
+        descripcion,
+        fecha: new Date().toISOString(),
+      };
+        (async () => {
+          try {
+            const { agregarMovimiento } = await import('../controllers/movimientoController');
+            const usuario_id = user?.id_usuario || 1;
+          const ok = await agregarMovimiento({
+            descripcion: movimiento.nombre || movimiento.descripcion,
+            monto: movimiento.cantidad,
+            fecha: movimiento.fecha,
+            tipo: movimiento.tipo,
+            categoria_id: 1,
+            usuario_id,
+          });
+          if (ok) alert('Movimiento guardado en la BD');
+          else alert('Error al guardar movimiento');
+        } catch (e) {
+          console.error(e);
+          alert('Error al guardar movimiento (ver consola)');
+        }
+      })();
+    };
+
     return (
       <View style={styles.container}>
               <Text style={styles.titulo}>Ahorra+ App</Text>
@@ -83,9 +120,9 @@ export default function EgresosScreen() {
                   value={descripcion}
                   onChangeText={setDescripcion}/>
       
-                  <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={onConfirm}>
                       <Text style={styles.btnText}>Confirmar</Text>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
               </View>
             </View>
     )

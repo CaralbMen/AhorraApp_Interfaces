@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Login from './screens/Login';
-import { initDatabaseOnce, databaseService } from './database/db';
+import { initDatabaseOnce } from './database/db';
+import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -17,5 +18,9 @@ export default function App() {
   }, []);
 
   if (!ready) return null;
-  return <Login />;
+  return (
+    <AuthProvider>
+      <Login />
+    </AuthProvider>
+  );
 }
