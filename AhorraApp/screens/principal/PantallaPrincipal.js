@@ -1,29 +1,40 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Pressable } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import estilosGlobales from '../styles/estilosGlobales';
-
-const movimientosData = [
-    {id: '1', desc: 'Depósito', monto: '+ $5,000.00', fecha: 'Feb 31, 2025', tipo: 'ingreso'},
-    {id: '2', desc: 'Pago de Renta', monto: '- $3,500.00', fecha: 'Feb 31, 2025', tipo: 'egreso'},
-    {id: '3', desc: 'Quincena', monto: '+ $25,600.00', fecha: 'Feb 31, 2025', tipo: 'ingreso'},
-    {id: '4', desc: 'Pago Cinemex', monto: '- $349.99', fecha: 'Feb 31, 2025', tipo: 'egreso'},
-    {id: '5', desc: 'Pago Oxxo UPQ', monto: '- $48.60', fecha: 'Feb 31, 2025', tipo: 'egreso'},
-];
-
+import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
+import { AuthContext } from '../../context/AuthContext';
 export default function PantallaPrincipal({ navigation }) {
+    const { usuario }= useContext(AuthContext);
+    const [movimientosData, setMovimientosData]=React.useState([]);
+    useEffect(()=>{
+        async function cargarMovimientos(){
+            if(usuario){
+                const datos= await obtenerMovimientosPorUsuario(usuario.id_usuario);
+                setMovimientosData(datos);
+            }
+        }
+        cargarMovimientos();
+    },[usuario]);
     return (
         <SafeAreaProvider style={estilosGlobales.container}>
             <View style={estilosGlobales.cabecera}>
                 <View style={estilosGlobales.tituloContent}>
                     <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
                 </View>
-                <View style={estilosGlobales.logoContent}>
+                {/* <View style={estilosGlobales.logoContent}>
                     <Text style={[estilosGlobales.logo, StyleSheet.logoTexto]}>$</Text>
+                </View> */}
+                 <View style={estilosGlobales.logoContent}>
+                    <ImageBackground
+                        source={require('../../assets/LogoAhorraSinFondo.png')}
+                        style={estilosGlobales.logo}
+                    />
                 </View>
             </View>
+
             <View style={estilosGlobales.pantallaActualContainer}>
-                <Text style={estilosGlobales.textoPantalla}>¡Hola Alberto!</Text>
+                <Text style={estilosGlobales.textoPantalla}>¡Hola {usuario?.nombre}!</Text>
             </View>
             <View style={[estilosGlobales.contenidoScreen, {flex:1}]}>
                 <ScrollView>
@@ -31,6 +42,7 @@ export default function PantallaPrincipal({ navigation }) {
                         <Text style={styles.totalDisponible}>Total disponible: 5 Pesos</Text>
                     </View>
                     <Text style={styles.movimientosTitle}>Últimos movimientos</Text>
+
                     {movimientosData.map((item) => (
                         <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento')}>
                             <View>
@@ -42,6 +54,7 @@ export default function PantallaPrincipal({ navigation }) {
                             </Text>
                         </Pressable>
                     ))}
+                    
                     <TouchableOpacity style={styles.verTodasButton} onPress={()=>navigation.navigate('Transacciones')}>
                         <Text style={styles.verTodasText}>Ver todas...</Text>
                     </TouchableOpacity>

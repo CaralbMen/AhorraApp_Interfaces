@@ -73,7 +73,7 @@ export default function StackScreens() {
           }}
         />
         <Menucito.Screen name={'Categorias'} component={CategoriasScreen}/>
-        <Menucito.Screen name={'Agregar'} component={EditarCategoriaScreen}/>
+        <Menucito.Screen name={'Agregar'} component={IngresosScreen}/>
         <Menucito.Screen name={'Perfil'} component={ActualizarInfoScreen}/>
       </Menucito.Navigator>
     </NavigationContainer>

@@ -63,8 +63,9 @@ export default StyleSheet.create({
         fontSize: 22,
         padding: 5,
         backgroundColor: '#E0EDFF',
-        width: '60%',
+        width: '80%',
         borderRadius: 10,
+        textAlign: 'center',
     },
     contenidoScreen:{
         backgroundColor:'#C0D5F2',

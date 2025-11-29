@@ -2,16 +2,15 @@ import { Text, StyleSheet, View, Button, TextInput, Alert,ImageBackground,Animat
 import React, { useState, useEffect} from 'react'
 import estilosGlobales from './styles/estilosGlobales';
 import Recuperacion from './Recuperacion'
-// import PantallaPrincipal from './principal/PantallaPrincipal';
 import Registro from './Registro';
 import StackScreens from './stackScreens';
 import { iniciarSesion } from '../controllers/usuarioController';
-
+import { AuthContext } from '../context/AuthContext';
 export default function Login() {
   const[pantalla, setPantalla]=useState('login');
   const [correo, Setcorreo]=useState('');
   const [contraseña, Setcontraseña]=useState('');
-
+  const [usuarioLogueado, setUsuarioLogueado]=useState(null);
   function validacionAlerta(){
     if(correo.trim()==='' && contraseña.trim()===''){
       Alert.alert('Error','Complete todos los campos');
@@ -40,6 +39,7 @@ export default function Login() {
       }
       const usuario = await iniciarSesion(correo, contraseña);
       Alert.alert('Bienvenido', usuario.nombre);
+      setUsuarioLogueado(usuario);
       setPantalla('PantallaPrincipal');
     } catch (e) {
       Alert.alert('Error', e.message);
@@ -49,7 +49,10 @@ export default function Login() {
     case 'Recuperacion':
       return <Recuperacion/>
     case 'PantallaPrincipal':
-      return <StackScreens/>
+      return (
+        <AuthContext.Provider value={{usuario: usuarioLogueado}}>
+          <StackScreens/>
+        </AuthContext.Provider>)
     case 'Registro':
       return <Registro/>
     case 'login':
