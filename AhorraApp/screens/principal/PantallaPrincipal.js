@@ -4,19 +4,28 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import estilosGlobales from '../styles/estilosGlobales';
 import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
-import { AuthContext } from '../../context/AuthContext';
+import { obtenerBalanceTotal } from '../../controllers/categoriasController';
+import { useAuth } from '../../context/AuthContext';
 export default function PantallaPrincipal({ navigation }) {
-    const { usuario }= useContext(AuthContext);
+    const { user } = useAuth();
     const [movimientosData, setMovimientosData]=React.useState([]);
+    const [balance, setBalance] = React.useState(0);
+
     useEffect(()=>{
-        async function cargarMovimientos(){
-            if(usuario){
-                const datos= await obtenerMovimientosPorUsuario(usuario.id_usuario);
-                setMovimientosData(datos);
+        async function cargarDatos(){
+            if(user){
+                const datos= await obtenerMovimientosPorUsuario(user.id_usuario);
+                setMovimientosData(datos || []);
+                try{
+                  const b = await obtenerBalanceTotal(user.id_usuario);
+                  setBalance(b || 0);
+                }catch(e){
+                  console.error('No se pudo obtener balance:', e);
+                }
             }
         }
-        cargarMovimientos();
-    },[usuario]);
+        cargarDatos();
+    },[user]);
     return (
         <SafeAreaProvider style={estilosGlobales.container}>
             <View style={estilosGlobales.cabecera}>
@@ -35,7 +44,7 @@ export default function PantallaPrincipal({ navigation }) {
             </View>
 
             <View style={estilosGlobales.pantallaActualContainer}>
-                <Text style={estilosGlobales.textoPantalla}>¡Hola {usuario?.nombre}!</Text>
+                <Text style={estilosGlobales.textoPantalla}>¡Hola {user?.nombre}!</Text>
             </View>
             <View style={[estilosGlobales.contenidoScreen, {flex:1}]}>
                 <ScrollView>
@@ -48,7 +57,7 @@ export default function PantallaPrincipal({ navigation }) {
                     {movimientosData.map((item) => (
                         <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento')}>
                             <View>
-                                <Text style={styles.itemDescripcion}>{item.desc}</Text>
+                                <Text style={styles.itemDescripcion}>{item.descripcion}</Text>
                                 <Text style={styles.itemFecha}>{item.fecha}</Text>
                             </View>
                             <Text style={[styles.itemMonto, item.tipo === 'ingreso' ? styles.ingreso : styles.egreso,]}>

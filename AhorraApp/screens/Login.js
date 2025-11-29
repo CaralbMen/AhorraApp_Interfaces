@@ -5,12 +5,12 @@ import Recuperacion from './Recuperacion'
 import Registro from './Registro';
 import StackScreens from './stackScreens';
 import { iniciarSesion } from '../controllers/usuarioController';
-import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 export default function Login() {
   const[pantalla, setPantalla]=useState('login');
   const [correo, Setcorreo]=useState('');
   const [contraseña, Setcontraseña]=useState('');
-  const [usuarioLogueado, setUsuarioLogueado]=useState(null);
+  const { login } = useAuth();
   function validacionAlerta(){
     if(correo.trim()==='' && contraseña.trim()===''){
       Alert.alert('Error','Complete todos los campos');
@@ -37,9 +37,9 @@ export default function Login() {
         Alert.alert('Error', 'Complete todos los campos');
         return;
       }
-      const usuario = await iniciarSesion(correo, contraseña);
+      // Usar la función del contexto para iniciar sesión
+      const usuario = await login(correo, contraseña);
       Alert.alert('Bienvenido', usuario.nombre);
-      setUsuarioLogueado(usuario);
       setPantalla('PantallaPrincipal');
     } catch (e) {
       Alert.alert('Error', e.message);
@@ -49,10 +49,7 @@ export default function Login() {
     case 'Recuperacion':
       return <Recuperacion/>
     case 'PantallaPrincipal':
-      return (
-        <AuthContext.Provider value={{usuario: usuarioLogueado}}>
-          <StackScreens/>
-        </AuthContext.Provider>)
+      return <StackScreens />
     case 'Registro':
       return <Registro/>
     case 'login':
