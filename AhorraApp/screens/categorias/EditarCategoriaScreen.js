@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import estilosGlobales from './styles/estilosGlobales.js';
-import { agregarCategoria, editarCategoria, obtenerCategoriaPorId } from '../controllers/FinanceController';
+import estilosGlobales from '../styles/estilosGlobales';
+import { agregarCategoria, editarCategoria, obtenerCategoriaPorId } from '../../controllers/categoriasController';
 
 export default function EditarCategoriaScreen({ navigation, route }) {
   const { id } = route.params || {};
@@ -21,12 +21,16 @@ export default function EditarCategoriaScreen({ navigation, route }) {
   }, [id]);
 
   const cargarDatosEdicion = async () => {
-    const data = await obtenerCategoriaPorId(id);
-    if (data) {
-        setNombre(data.nombre);
-        setDescripcion(data.descripcion);
-        setPresupuesto(data.presupuesto.toString());
-        setPeriodicidad(data.periodo || 'Semanal');
+    try {
+        const data = await obtenerCategoriaPorId(id);
+        if (data) {
+            setNombre(data.nombre);
+            setDescripcion(data.descripcion);
+            setPresupuesto(data.presupuesto.toString());
+            setPeriodicidad(data.periodo || 'Semanal');
+        }
+    } catch (error) {
+        console.error("Error cargando datos de edición:", error);
     }
   };
 
