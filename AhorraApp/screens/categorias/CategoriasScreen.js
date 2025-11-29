@@ -2,12 +2,13 @@ import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
-import estilosGlobales from './styles/estilosGlobales.js';
-import { obtenerCategorias, eliminarCategoria } from '../controllers/FinanceController';
+import estilosGlobales from '../styles/estilosGlobales';
+import { obtenerCategorias, eliminarCategoria } from '../../controllers/categoriasController';
 
 export default function CategoriasScreen({ navigation }) {
   const [categorias, setCategorias] = useState([]);
   const USUARIO_ID = 1;
+
   useFocusEffect(
     useCallback(() => {
       cargarCategorias();
@@ -15,14 +16,18 @@ export default function CategoriasScreen({ navigation }) {
   );
 
   const cargarCategorias = async () => {
-    const data = await obtenerCategorias(USUARIO_ID);
-    setCategorias(data);
+    try {
+        const data = await obtenerCategorias(USUARIO_ID);
+        setCategorias(data || []);
+    } catch (error) {
+        console.error("Error cargando categorías:", error);
+    }
   };
 
   const procesarEliminacion = async (id) => {
     const exito = await eliminarCategoria(id);
     if (exito) {
-        cargarCategorias();
+        cargarCategorias(); 
     } else {
         Alert.alert("Error", "No se pudo eliminar la categoría");
     }
@@ -63,7 +68,6 @@ export default function CategoriasScreen({ navigation }) {
             <ScrollView>
                 <View style={styles.titleContainer}>
                     <Text style={styles.subTitle}>Total de Categorías: {categorias.length}</Text>
-                    {/* Botón para agregar nueva categoría desde aquí también si deseas */}
                     <TouchableOpacity 
                         style={styles.btnAdd} 
                         onPress={() => navigation.navigate('EditarCategoria')}
@@ -83,7 +87,6 @@ export default function CategoriasScreen({ navigation }) {
                         <Text style={styles.cardPeriodicidad}>{item.periodo}</Text>
                     </View>
                     <View style={styles.cardBotones}>
-                        {/* Pasamos el ID y los datos actuales para editar */}
                         <TouchableOpacity onPress={() => navigation.navigate('EditarCategoria', { 
                             id: item.id,
                         })}>
