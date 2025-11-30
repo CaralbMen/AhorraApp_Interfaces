@@ -4,6 +4,19 @@ import React, {useEffect, useState} from 'react';
 import { useAuth } from '../../context/AuthContext';
 import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
 import { obtenerCategorias } from '../../controllers/categoriasController';
+
+function formatDateShort(d) {
+    try {
+        const dt = new Date(d);
+        if (Number.isNaN(dt.getTime())) return d;
+        const yyyy = dt.getFullYear();
+        const mm = String(dt.getMonth() + 1).padStart(2, '0');
+        const dd = String(dt.getDate()).padStart(2, '0');
+        return `${yyyy}/${mm}/${dd}`;
+    } catch (e) {
+        return d;
+    }
+}
 export default function Transacciones({navigation}){
     const { user } = useAuth();
     const [allMovimientos, setAllMovimientos] = useState([]);
@@ -153,7 +166,7 @@ export default function Transacciones({navigation}){
                             {movimientosData.map((item)=>(
                                 <Pressable key={item.id} style={styles.movimiento} onPress={()=>navigation.navigate('DetalleDeMovimiento', { movimiento: item })}>
                                     <View style={styles.descripcionMovimiento}>
-                                        <Text style={[styles.fecha, styles.texto]}>{item.fecha}</Text>
+                                        <Text style={[styles.fecha, styles.texto]}>{formatDateShort(item.fecha)}</Text>
                                         <Text>{item.tipo}</Text>
                                     </View>
                                     <View style={styles.cantidadesMovimiento}>

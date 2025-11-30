@@ -5,6 +5,19 @@ import estilosGlobales from '../styles/estilosGlobales';
 import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
 import { obtenerBalanceTotal } from '../../controllers/categoriasController';
 import { useAuth } from '../../context/AuthContext';
+
+function formatDateShort(d) {
+    try {
+        const dt = new Date(d);
+        if (Number.isNaN(dt.getTime())) return d;
+        const yyyy = dt.getFullYear();
+        const mm = String(dt.getMonth() + 1).padStart(2, '0');
+        const dd = String(dt.getDate()).padStart(2, '0');
+        return `${yyyy}/${mm}/${dd}`;
+    } catch (e) {
+        return d;
+    }
+}
 export default function PantallaPrincipal({ navigation }) {
     const { user } = useAuth();
     const [movimientosData, setMovimientosData]=React.useState([]);
@@ -57,7 +70,7 @@ export default function PantallaPrincipal({ navigation }) {
                         <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento', { movimiento: item })}>
                             <View>
                                 <Text style={styles.itemDescripcion}>{item.descripcion}</Text>
-                                <Text style={styles.itemFecha}>{item.fecha}</Text>
+                                <Text style={styles.itemFecha}>{formatDateShort(item.fecha)}</Text>
                             </View>
                             <Text style={[styles.itemMonto, (item.tipo === 'ingreso' || item.tipo === 'Depósito') ? styles.ingreso : styles.egreso,]}>
                                 {item.monto}
