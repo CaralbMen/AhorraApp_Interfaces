@@ -85,7 +85,7 @@ export default function Graficas({navigation}){
         </View>
       ))}
 
-      <Text style={[styles.title, {marginTop: 16}]}>Comparativa Ingresos vs Egresos ({new Date().toLocaleString('default', { month: 'long', year: 'numeric' })})</Text>
+      <Text style={[styles.title, {marginTop: 16}]}>Comparativa Ingresos/Egresos ({new Date().toLocaleString('default', { month: 'long', year: 'numeric' })})</Text>
       <View style={styles.chartCard}>
         <PieChart
           data={generarGrafica(comparativaMes.total_ingresos, comparativaMes.total_egresos, 'Comparativa mensual')}

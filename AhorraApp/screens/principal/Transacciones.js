@@ -229,12 +229,14 @@ const styles= StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontWeight:'bold',
+        
     },
     botonVerGraficas:{
         width:'100%',
         height: '100%',
         textAlign:'center',
         justifyContent:'center',
+        // borderRadius: 15,
     },
     botonesGraficas:{
         alignSelf:'center',
@@ -244,7 +246,7 @@ const styles= StyleSheet.create({
         height: 50,
         marginTop:15,
         backgroundColor: 'red',
-        borderRadius: 15,
+        borderRadius: 25,
         backgroundColor: '#94b8ebff'
     },
     icono:{
@@ -357,7 +359,7 @@ const styles= StyleSheet.create({
         paddingLeft: 10,
     },
     categoryChip: {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         paddingHorizontal: 12,
         paddingVertical: 6,
         borderRadius: 20,
