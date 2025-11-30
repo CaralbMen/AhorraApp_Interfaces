@@ -50,6 +50,16 @@ class DatabaseService{
                 FOREIGN KEY(usuario_id) REFERENCES usuarios(id_usuario)
             );
         `);
+        // Tabla auxiliar para recuperación por token (sin correo)
+        await this.db.execAsync(`
+            CREATE TABLE IF NOT EXISTS tokens_reset(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email TEXT NOT NULL,
+                token TEXT NOT NULL,
+                expira INTEGER NOT NULL,  -- epoch ms
+                usado INTEGER NOT NULL DEFAULT 0
+            );
+        `);
     };
     async seed(){
         console.log('Base de datos inicializada. Los usuarios se crean desde la app.');
