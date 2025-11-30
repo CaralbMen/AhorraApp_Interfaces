@@ -6,16 +6,16 @@ class DatabaseService{
     async initialize(){
         this.db= await SQLite.openDatabaseAsync('AhorraMas.db');
         await this.db.execAsync('PRAGMA foreign_keys= ON');
-        
-        // IMPORTANTE: Borrar estas líneas una vez que la BD esté actualizada
+        //Se pueden descomentar si quieres limpiar tu bd, a veceses me marcaba errores por que ya estaban los datos hechos
+        //Si la descomentas, checa que la comentes antes de hacer push pq si no, cuando hagamos pull los demas, se nos va a petar la bd (de los datos nomas)
         console.log('Recreando tablas para actualizar esquema...');
-        try {
-            await this.db.execAsync('DROP TABLE IF EXISTS movimientos;');
-            await this.db.execAsync('DROP TABLE IF EXISTS categorias;');
-            await this.db.execAsync('DROP TABLE IF EXISTS usuarios;');
-        } catch (e) {
-            console.log('No se pudieron borrar tablas (probablemente no existen):', e);
-        }
+        // try {
+        //     await this.db.execAsync('DROP TABLE IF EXISTS movimientos;');
+        //     await this.db.execAsync('DROP TABLE IF EXISTS categorias;');
+        //     await this.db.execAsync('DROP TABLE IF EXISTS usuarios;');
+        // } catch (e) {
+        //     console.log('No se pudieron borrar tablas:', e);
+        // }
         
         await this.db.execAsync(`
             CREATE TABLE IF NOT EXISTS usuarios(
@@ -52,11 +52,11 @@ class DatabaseService{
         `);
     };
     async seed(){
-        // El seeder está vacío ya que los usuarios se crean desde la app
         console.log('Base de datos inicializada. Los usuarios se crean desde la app.');
     }
    
 }
+//Quite el seeder pq no jalaba, lo dejo comentado como ejemplo paea las consultas de los cnotrollers
 export default DatabaseService;
 // const db = SQLite.openDatabaseAsync('ahorraApp.db');
 // import AsyncStorage from '@react-native-async-storage/async-storage';
