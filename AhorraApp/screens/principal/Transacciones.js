@@ -1,22 +1,22 @@
 import { Button, Text, View, ImageBackground, ScrollView, StyleSheet, TextInput, Pressable } from 'react-native'
 import estilosGlobales from '../styles/estilosGlobales';
-import React, {useContext, useEffect} from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import React, {useEffect} from 'react';
+import { useAuth } from '../../context/AuthContext';
 import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
 export default function Transacciones({navigation}){
-    const { usuario }= useContext(AuthContext);
+    const { user } = useAuth();
     const [movimientosData, setMovimientosData]=React.useState([]);
     useEffect(()=>{
         async function cargarMovimientos(){
-            if(usuario){
-                console.log('Cargando movimientos para el usuario ID:', usuario.id_usuario);
-                const datos= await obtenerMovimientosPorUsuario(usuario.id_usuario);
+            if(user){
+                console.log('Cargando movimientos para el usuario ID:', user.id_usuario);
+                const datos= await obtenerMovimientosPorUsuario(user.id_usuario);
                 console.log('Movimientos cargados:', datos);  
                 setMovimientosData(datos);
             }
         }
         cargarMovimientos();
-    },[usuario]);
+    },[user]);
     return (
         <View style={estilosGlobales.container}>
             <View style={estilosGlobales.cabecera}>
