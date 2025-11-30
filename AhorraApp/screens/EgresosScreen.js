@@ -1,24 +1,35 @@
 import { Text, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native'
 import React, {useState} from 'react'
 import { useAuth } from '../context/AuthContext';
+import CategoriasSelect from '../components/CategoriasSelect';
 
 export default function EgresosScreen() {
     const [tipo, setTipo] = useState("Egreso");
     const [nombre, setNombre] = useState("");
-    const [categoria, setCategoria] = useState("");
+    const [categoriaId, setCategoriaId] = useState(null);
+    const [categoriaNombre, setCategoriaNombre] = useState("");
     const [cantidad, setCantidad] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const { user } = useAuth();
+
+    const handleSelectCategory = (id, nombre) => {
+      setCategoriaId(id);
+      setCategoriaNombre(nombre);
+    };
 
     const onConfirm = () => {
       if (!nombre.trim() || !cantidad) {
         alert('Completa nombre y cantidad');
         return;
       }
+      if (!categoriaId) {
+        alert('Selecciona una categoría');
+        return;
+      }
       const movimiento = {
         tipo: tipo === 'ingreso' ? 'ingreso' : 'egreso',
         nombre,
-        categoria,
+        categoria: categoriaNombre,
         cantidad: Number(cantidad) || 0,
         descripcion,
         fecha: new Date().toISOString(),
@@ -32,10 +43,17 @@ export default function EgresosScreen() {
             monto: movimiento.cantidad,
             fecha: movimiento.fecha,
             tipo: movimiento.tipo,
-            categoria_id: 1,
-            usuario_id,
+            categoria_id: categoriaId,
+            // usuario_id,
           });
-          if (ok) alert('Movimiento guardado en la BD');
+          if (ok) {
+            alert('Movimiento guardado en la BD');
+            setNombre("");
+            setCategoriaId(null);
+            setCategoriaNombre("");
+            setCantidad("");
+            setDescripcion("");
+          }
           else alert('Error al guardar movimiento');
         } catch (e) {
           console.error(e);
@@ -89,13 +107,12 @@ export default function EgresosScreen() {
                   styles.label,
                   { color: tipo === "ingreso" ? "green" : "red" },
                 ]}>Categoria</Text>
-                  <TextInput
-                  style={[
-                  styles.input,
-                  { borderColor: tipo === "ingreso" ? "green" : "red" },
-                ]}
-                  value={categoria}
-                  onChangeText={setCategoria}/>
+                  <CategoriasSelect
+                    usuarioId={user?.id_usuario}
+                    selectedCategoryId={categoriaId}
+                    onSelectCategory={handleSelectCategory}
+                    color={tipo === "ingreso" ? "green" : "red"}
+                  />
                   <Text style={[
                   styles.label,
                   { color: tipo === "ingreso" ? "green" : "red" },

@@ -34,33 +34,15 @@ class DatabaseService{
                 fecha TEXT NOT NULL,
                 tipo TEXT NOT NULL,
                 categoria_id INTEGER NOT NULL,
-                FOREIGN KEY(categoria_id) REFERENCES categorias(id)
+                usuario_id INTEGER NOT NULL,
+                FOREIGN KEY(categoria_id) REFERENCES categorias(id),
+                FOREIGN KEY(usuario_id) REFERENCES usuarios(id_usuario)
             );
         `);
-       
-
     };
     async seed(){
-        await this.db.execAsync(`
-            INSERT OR IGNORE INTO usuarios (nombre, email, telefono, password) VALUES (?,?,?,?)`,
-            ['Prueba', 'prueba@gmail.com', '1234567890', 'password']
-        );
-        await this.db.execAsync(
-            `INSERT OR IGNORE INTO categorias (nombre, descripcion, presupuesto, periodo, id_usuario) VALUES (?, ?, ?, ?, ?)`,
-            ['Alimentación', 'Gastos de comida y supermercado', 3000, 'Mensual', 1]
-        );
-        await this.db.execAsync(
-            `INSERT OR IGNORE INTO categorias (nombre, descripcion, presupuesto, periodo, id_usuario) VALUES (?, ?, ?, ?, ?)`,
-            ['Transporte', 'Gasolina y transporte público', 1500, 'Mensual', 1]
-        );
-        await this.db.execAsync(
-            `INSERT OR IGNORE INTO movimientos (descripcion, monto, fecha, tipo, categoria_id) VALUES (?, ?, ?, ?, ?)`,
-            ['Compra en supermercado', 500, '2025-11-28', 'Retiro', 1]
-        );
-        await this.db.execAsync(
-            `INSERT OR IGNORE INTO movimientos (descripcion, monto, fecha, tipo, categoria_id) VALUES (?, ?, ?, ?, ?)`,
-            ['Pago de gasolina', 800, '2025-11-27', 'Retiro', 2]
-        );
+        // El seeder está vacío ya que los usuarios se crean desde la app
+        console.log('Base de datos inicializada. Los usuarios se crean desde la app.');
     }
    
 }

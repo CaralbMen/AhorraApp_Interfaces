@@ -10,11 +10,13 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
+import CategoriasSelect from '../components/CategoriasSelect';
 
 export default function IngresosScreen() {
   const [tipo, setTipo] = useState('ingreso');
   const [nombre, setNombre] = useState('');
-  const [categoria, setCategoria] = useState('');
+  const [categoriaId, setCategoriaId] = useState(null);
+  const [categoriaNombre, setCategoriaNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const { user } = useAuth();
@@ -24,15 +26,24 @@ export default function IngresosScreen() {
     return () => console.log('IngresosScreen desmontado');
   }, []);
 
+  const handleSelectCategory = (id, nombre) => {
+    setCategoriaId(id);
+    setCategoriaNombre(nombre);
+  };
+
   const onConfirm = () => {
     if (!nombre.trim() || !cantidad.trim()) {
       alert('Completa al menos Nombre y Cantidad');
       return;
     }
+    if (!categoriaId) {
+      alert('Selecciona una categoría');
+      return;
+    }
     const movimiento = {
       tipo,
       nombre,
-      categoria,
+      categoria: categoriaNombre,
       cantidad: Number(cantidad) || 0,
       descripcion,
       fecha: new Date().toISOString(),
@@ -48,21 +59,23 @@ export default function IngresosScreen() {
           monto: movimiento.cantidad,
           fecha: movimiento.fecha,
           tipo: movimiento.tipo,
-          categoria_id: 1, // TODO: mapear categoría seleccionada a su id real
-          usuario_id,
+          categoria_id: categoriaId,
+          // usuario_id,
         });
-        if (ok) alert('Movimiento guardado en la BD');
+        if (ok) {
+          alert('Movimiento guardado en la BD');
+          setNombre('');
+          setCategoriaId(null);
+          setCategoriaNombre('');
+          setCantidad('');
+          setDescripcion('');
+        }
         else alert('Error al guardar movimiento (revisa consola)');
       } catch (e) {
         console.error('Error guardando movimiento:', e);
         alert('Error al guardar movimiento (ver consola)');
       }
     })();
-
-    setNombre('');
-    setCategoria('');
-    setCantidad('');
-    setDescripcion('');
   };
 
   return (
@@ -130,11 +143,11 @@ export default function IngresosScreen() {
           />
 
           <Text style={[styles.label, { color: tipo === 'ingreso' ? 'green' : 'red' }]}>Categoría</Text>
-          <TextInput
-            style={[styles.input, { borderColor: tipo === 'ingreso' ? 'green' : 'red' }]}
-            placeholder="Ej. Trabajo, Comida, Transporte"
-            value={categoria}
-            onChangeText={setCategoria}
+          <CategoriasSelect
+            usuarioId={user?.id_usuario}
+            selectedCategoryId={categoriaId}
+            onSelectCategory={handleSelectCategory}
+            color={tipo === 'ingreso' ? 'green' : 'red'}
           />
 
           <Text style={[styles.label, { color: tipo === 'ingreso' ? 'green' : 'red' }]}>Cantidad</Text>

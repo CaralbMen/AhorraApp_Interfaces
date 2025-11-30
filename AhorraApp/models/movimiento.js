@@ -1,5 +1,5 @@
 export default class Movimiento{
-    constructor(id, descripcion, monto, fecha, tipo, categoria_id, categoria_nombre, usuario_id){
+    constructor(id, descripcion, monto, fecha, tipo, categoria_id, categoria_nombre){
         this.id=id;
         this.descripcion=descripcion;
         this.monto=monto;
@@ -7,7 +7,7 @@ export default class Movimiento{
         this.tipo=tipo;
         this.categoria_id=categoria_id;
         this.categoria_nombre=categoria_nombre;
-        this.usuario_id=usuario_id;
+        // this.usuario_id=usuario_id;
     }
     static validarDescripcion(descripcion){
         if(descripcion.trim().length===0){
