@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import estilosGlobales from '../styles/estilosGlobales';
-import { agregarCategoria, editarCategoria, obtenerCategoriaPorId } from '../../controllers/categoriasController';
+import { agregarCategoria, editarCategoria, obtenerCategoriaPorId, obtenerIdUsuarioDefault } from '../../controllers/categoriasController';
 
 export default function EditarCategoriaScreen({ navigation, route }) {
   const { id } = route.params || {};
@@ -12,7 +12,6 @@ export default function EditarCategoriaScreen({ navigation, route }) {
   const [descripcion, setDescripcion] = useState('');
   const [presupuesto, setPresupuesto] = useState('');
   const [periodicidad, setPeriodicidad] = useState('Semanal');
-  const USUARIO_ID = 1;
 
   useEffect(() => {
     if (esEdicion) {
@@ -41,12 +40,23 @@ export default function EditarCategoriaScreen({ navigation, route }) {
     }
 
     let exito = false;
-    const presupuestoNum = parseFloat(presupuesto);
+    const presupuestoNum = parseFloat(presupuesto) || 0; 
 
-    if (esEdicion) {
-        exito = await editarCategoria(id, nombre, descripcion, presupuestoNum, periodicidad);
-    } else {
-        exito = await agregarCategoria(nombre, descripcion, presupuestoNum, periodicidad, USUARIO_ID);
+    try {
+        const idUsuarioReal = await obtenerIdUsuarioDefault();
+        
+        if (!idUsuarioReal) {
+             Alert.alert("Error", "No se encontró ningún usuario en la base de datos.");
+             return;
+        }
+
+        if (esEdicion) {
+            exito = await editarCategoria(id, nombre, descripcion, presupuestoNum, periodicidad);
+        } else {
+            exito = await agregarCategoria(nombre, descripcion, presupuestoNum, periodicidad, idUsuarioReal);
+        }
+    } catch (e) {
+        console.error("Error en handleGuardar:", e);
     }
 
     if (exito) {
@@ -54,7 +64,7 @@ export default function EditarCategoriaScreen({ navigation, route }) {
             { text: "OK", onPress: () => navigation.goBack() }
         ]);
     } else {
-        Alert.alert("Error", "Hubo un problema al guardar en la base de datos");
+        Alert.alert("Error", "No se pudo guardar en la base de datos.");
     }
   };
 
@@ -65,7 +75,10 @@ export default function EditarCategoriaScreen({ navigation, route }) {
           <Text style={estilosGlobales.titulo}>Ahorra+ App</Text>
         </View>
         <View style={estilosGlobales.logoContent}>
-          <Text style={[estilosGlobales.logo, styles.logoTexto]}>💲</Text>
+            <ImageBackground
+                source={require('../../assets/LogoAhorraSinFondo.png')}
+                style={estilosGlobales.logo}
+            />
         </View>
       </View>
 

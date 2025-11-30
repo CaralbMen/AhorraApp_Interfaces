@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Platform, ImageBackground } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import estilosGlobales from '../styles/estilosGlobales';
-import { obtenerCategorias, eliminarCategoria } from '../../controllers/categoriasController';
+import { obtenerCategorias, eliminarCategoria, obtenerIdUsuarioDefault } from '../../controllers/categoriasController';
 
 export default function CategoriasScreen({ navigation }) {
   const [categorias, setCategorias] = useState([]);
-  const USUARIO_ID = 1;
 
   useFocusEffect(
     useCallback(() => {
@@ -17,10 +16,13 @@ export default function CategoriasScreen({ navigation }) {
 
   const cargarCategorias = async () => {
     try {
-        const data = await obtenerCategorias(USUARIO_ID);
-        setCategorias(data || []);
+        const idUsuario = await obtenerIdUsuarioDefault();
+        if (idUsuario) {
+            const data = await obtenerCategorias(idUsuario);
+            setCategorias(data || []);
+        }
     } catch (error) {
-        console.error("Error cargando categorías:", error);
+        console.error(error);
     }
   };
 
@@ -57,7 +59,10 @@ export default function CategoriasScreen({ navigation }) {
                 <Text style={estilosGlobales.titulo}>Ahorra+ App</Text>
             </View>
             <View style={estilosGlobales.logoContent}>
-                <Text style={[estilosGlobales.logo, styles.logoTexto]}>💲</Text>
+                <ImageBackground
+                    source={require('../../assets/LogoAhorraSinFondo.png')}
+                    style={estilosGlobales.logo}
+                />
             </View>
         </View>
         <View style={estilosGlobales.pantallaActualContainer}>
@@ -70,14 +75,14 @@ export default function CategoriasScreen({ navigation }) {
                     <Text style={styles.subTitle}>Total de Categorías: {categorias.length}</Text>
                     <TouchableOpacity 
                         style={styles.btnAdd} 
-                        onPress={() => navigation.navigate('EditarCategoria')}
+                        onPress={() => navigation.navigate('EditarCategoriaScreen')}
                     >
                         <Text style={{color: 'white', fontWeight: 'bold'}}>+ Nueva</Text>
                     </TouchableOpacity>
                 </View>
 
                 {categorias.map((item) => (
-                <View key={item.id} style={styles.categoriaCard}>
+                <View key={item.id.toString()} style={styles.categoriaCard}>
                     <View style={styles.cardInfo}>
                         <Text style={styles.cardNombre}>{item.nombre}</Text>
                         <Text style={styles.cardDescripcion}>{item.descripcion}</Text>
@@ -87,7 +92,7 @@ export default function CategoriasScreen({ navigation }) {
                         <Text style={styles.cardPeriodicidad}>{item.periodo}</Text>
                     </View>
                     <View style={styles.cardBotones}>
-                        <TouchableOpacity onPress={() => navigation.navigate('EditarCategoria', { 
+                        <TouchableOpacity onPress={() => navigation.navigate('EditarCategoriaScreen', { 
                             id: item.id,
                         })}>
                             <Text style={styles.cardIcon}>✏️</Text>

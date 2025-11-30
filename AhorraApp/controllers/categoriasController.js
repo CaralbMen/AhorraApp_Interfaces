@@ -1,8 +1,16 @@
 import { ejecutar, obtenerTodos, obtenerPrimero } from '../database/db';
 
-//Categorias
+export const obtenerIdUsuarioDefault = async () => {
+    try {
+        const sql = `SELECT id_usuario FROM usuarios LIMIT 1`;
+        const result = await obtenerPrimero(sql);
+        return result ? result.id_usuario : null;
+    } catch (error) {
+        console.error("Error obteniendo usuario default:", error);
+        return null;
+    }
+};
 
-// Obtener todas las categorías de un usuario
 export const obtenerCategorias = async (idUsuario) => {
     try {
         const sql = `SELECT * FROM categorias WHERE id_usuario = ?`;
@@ -14,7 +22,6 @@ export const obtenerCategorias = async (idUsuario) => {
     }
 };
 
-// Obtener una categoría por ID (para editar)
 export const obtenerCategoriaPorId = async (id) => {
     try {
         const sql = `SELECT * FROM categorias WHERE id = ?`;
@@ -26,7 +33,6 @@ export const obtenerCategoriaPorId = async (id) => {
     }
 };
 
-// Agregar nueva categoría
 export const agregarCategoria = async (nombre, descripcion, presupuesto, periodo, idUsuario) => {
     try {
         const sql = `INSERT INTO categorias (nombre, descripcion, presupuesto, periodo, id_usuario) VALUES (?, ?, ?, ?, ?)`;
@@ -38,7 +44,6 @@ export const agregarCategoria = async (nombre, descripcion, presupuesto, periodo
     }
 };
 
-// Editar categoría existente
 export const editarCategoria = async (id, nombre, descripcion, presupuesto, periodo) => {
     try {
         const sql = `UPDATE categorias SET nombre = ?, descripcion = ?, presupuesto = ?, periodo = ? WHERE id = ?`;
@@ -50,10 +55,8 @@ export const editarCategoria = async (id, nombre, descripcion, presupuesto, peri
     }
 };
 
-// Eliminar categoría
 export const eliminarCategoria = async (id) => {
     try {
-        // Opcional: Primero podrías verificar si tiene movimientos asociados para no dejar datos huérfanos
         const sql = `DELETE FROM categorias WHERE id = ?`;
         await ejecutar(sql, [id]);
         return true;
@@ -63,9 +66,6 @@ export const eliminarCategoria = async (id) => {
     }
 };
 
-//Pantalla Principal
-
-// Obtener los últimos 5 movimientos
 export const obtenerUltimosMovimientos = async (idUsuario) => {
     try {
         const sql = `
@@ -84,7 +84,6 @@ export const obtenerUltimosMovimientos = async (idUsuario) => {
     }
 };
 
-// Calcular balance total (Ingresos - Egresos)
 export const obtenerBalanceTotal = async (idUsuario) => {
     try {
         const sqlIngreso = `

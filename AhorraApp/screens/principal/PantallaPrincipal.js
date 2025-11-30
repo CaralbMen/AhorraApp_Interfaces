@@ -1,32 +1,47 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Pressable } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
 import estilosGlobales from '../styles/estilosGlobales';
-import {obtenerMovimientosPorUsuario} from '../../controllers/movimientoController';
+import { obtenerMovimientosPorUsuario } from '../../controllers/movimientoController';
 import { AuthContext } from '../../context/AuthContext';
+
 export default function PantallaPrincipal({ navigation }) {
-    const { usuario }= useContext(AuthContext);
-    const [movimientosData, setMovimientosData]=React.useState([]);
-    useEffect(()=>{
-        async function cargarMovimientos(){
-            if(usuario){
-                const datos= await obtenerMovimientosPorUsuario(usuario.id_usuario);
-                setMovimientosData(datos);
+    const { usuario } = useContext(AuthContext);
+    const [movimientosData, setMovimientosData] = useState([]);
+    const [balance, setBalance] = useState(0);
+
+    useEffect(() => {
+        async function cargarMovimientos() {
+            if (usuario && usuario.id_usuario) {
+                try {
+                    const datos = await obtenerMovimientosPorUsuario(usuario.id_usuario);
+                    setMovimientosData(datos);
+
+                    const total = datos.reduce((acc, item) => {
+                        const monto = parseFloat(item.monto);
+                        if (item.tipo === 'ingreso' || item.tipo === 'Depósito') {
+                            return acc + monto;
+                        } else {
+                            return acc - monto;
+                        }
+                    }, 0);
+                    
+                    setBalance(total);
+                } catch (error) {
+                    console.error("Error al cargar movimientos:", error);
+                }
             }
         }
         cargarMovimientos();
-    },[usuario]);
+    }, [usuario]);
+
     return (
         <SafeAreaProvider style={estilosGlobales.container}>
             <View style={estilosGlobales.cabecera}>
                 <View style={estilosGlobales.tituloContent}>
                     <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
                 </View>
-                {/* <View style={estilosGlobales.logoContent}>
-                    <Text style={[estilosGlobales.logo, StyleSheet.logoTexto]}>$</Text>
-                </View> */}
-                 <View style={estilosGlobales.logoContent}>
+                <View style={estilosGlobales.logoContent}>
                     <ImageBackground
                         source={require('../../assets/LogoAhorraSinFondo.png')}
                         style={estilosGlobales.logo}
@@ -37,25 +52,27 @@ export default function PantallaPrincipal({ navigation }) {
             <View style={estilosGlobales.pantallaActualContainer}>
                 <Text style={estilosGlobales.textoPantalla}>¡Hola {usuario?.nombre}!</Text>
             </View>
+            
             <View style={[estilosGlobales.contenidoScreen, {flex:1}]}>
                 <ScrollView>
                     <View style={styles.balanceContainer}>
                         <Text style={styles.totalDisponible}>Total disponible: ${balance}</Text>
                     </View>
+                    
                     <Text style={styles.movimientosTitle}>Últimos movimientos</Text>
-
 
                     {movimientosData.map((item) => (
                         <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento')}>
                             <View>
-                                <Text style={styles.itemDescripcion}>{item.desc}</Text>
+                                <Text style={styles.itemDescripcion}>{item.desc || item.descripcion}</Text>
                                 <Text style={styles.itemFecha}>{item.fecha}</Text>
                             </View>
-                            <Text style={[styles.itemMonto, item.tipo === 'ingreso' ? styles.ingreso : styles.egreso,]}>
+                            <Text style={[styles.itemMonto, (item.tipo === 'ingreso' || item.tipo === 'Depósito') ? styles.ingreso : styles.egreso,]}>
                                 {item.monto}
                             </Text>
                         </Pressable>
                     ))}
+                    
                     <TouchableOpacity style={styles.verTodasButton} onPress={()=>navigation.navigate('Transacciones')}>
                         <Text style={styles.verTodasText}>Ver todas...</Text>
                     </TouchableOpacity>
