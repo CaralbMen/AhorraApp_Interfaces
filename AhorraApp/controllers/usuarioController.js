@@ -1,11 +1,63 @@
 import { ejecutar, obtenerPrimero } from '../database/db';
 import Usuario from '../models/Usuario';
 
+// Genera un token de 6 dígitos
+function generarToken6() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
 function validarEmail(email) {
   return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test((email || '').trim());
 }
 function validarPassword(pw) {
   return typeof pw === 'string' && pw.trim().length >= 6;
+}
+
+// Crea y guarda un token para el correo dado (no se envía por email)
+export async function solicitarTokenRecuperacion(correo) {
+  const c = (correo || '').trim().toLowerCase();
+  if (!c) throw new Error('Ingrese el correo');
+  if (!validarEmail(c)) throw new Error('Correo inválido');
+
+  const existe = await obtenerPrimero(
+    'SELECT id_usuario FROM usuarios WHERE email = ? LIMIT 1',
+    [c]
+  );
+  if (!existe) throw new Error('Correo no registrado');
+
+  const token = generarToken6();
+  const expira = Date.now() + 15 * 60 * 1000; // 15 min
+
+  // Invalida tokens previos sin usar y guarda el nuevo
+  await ejecutar('UPDATE tokens_reset SET usado = 1 WHERE email = ? AND usado = 0', [c]);
+  await ejecutar(
+    'INSERT INTO tokens_reset (email, token, expira, usado) VALUES (?,?,?,0)',
+    [c, token, expira]
+  );
+
+  // Devuelve el token para mostrarlo en la pantalla
+  return token;
+}
+
+// Cambia la contraseña validando el token
+export async function cambiarPasswordConToken(correo, token, nuevaPassword) {
+  const c = (correo || '').trim().toLowerCase();
+  const t = (token || '').trim();
+  if (!c || !t || !nuevaPassword) throw new Error('Complete todos los campos');
+  if (!validarEmail(c)) throw new Error('Correo inválido');
+  if (!validarPassword(nuevaPassword)) throw new Error('La contraseña debe tener mínimo 6 caracteres');
+
+  const fila = await obtenerPrimero(
+    'SELECT * FROM tokens_reset WHERE email = ? AND token = ? AND usado = 0 ORDER BY id DESC LIMIT 1',
+    [c, t]
+  );
+  if (!fila) throw new Error('Token inválido');
+  if (Number(fila.expira) < Date.now()) throw new Error('El token ha expirado');
+
+  await ejecutar('UPDATE usuarios SET password = ? WHERE email = ?', [nuevaPassword, c]);
+  await ejecutar('UPDATE tokens_reset SET usado = 1 WHERE id = ?', [fila.id]);
+
+  return true;
 }
 
 export async function existeCorreo(correo) {
