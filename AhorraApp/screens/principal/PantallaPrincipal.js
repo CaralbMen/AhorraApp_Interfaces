@@ -54,7 +54,7 @@ export default function PantallaPrincipal({ navigation }) {
                     <Text style={styles.movimientosTitle}>Últimos movimientos</Text>
 
                     {movimientosData.slice(0, 5).map((item) => (
-                        <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento')}>
+                        <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento', { movimiento: item })}>
                             <View>
                                 <Text style={styles.itemDescripcion}>{item.descripcion}</Text>
                                 <Text style={styles.itemFecha}>{item.fecha}</Text>
