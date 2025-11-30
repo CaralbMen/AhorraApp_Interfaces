@@ -13,8 +13,10 @@ export default function PantallaPrincipal({ navigation }) {
     useEffect(()=>{
         async function cargarDatos(){
             if(user){
+                console.log('PantallaPrincipal - Cargando movimientos para usuario ID:', user.id_usuario);
                 const datos= await obtenerMovimientosPorUsuario(user.id_usuario);
-                setMovimientosData(datos || []);
+                console.log('PantallaPrincipal - Movimientos cargados:', datos);
+                setMovimientosData(datos);
                 try{
                   const b = await obtenerBalanceTotal(user.id_usuario);
                   setBalance(b || 0);
@@ -51,7 +53,7 @@ export default function PantallaPrincipal({ navigation }) {
                     
                     <Text style={styles.movimientosTitle}>Últimos movimientos</Text>
 
-                    {movimientosData.map((item) => (
+                    {movimientosData.slice(0, 5).map((item) => (
                         <Pressable key={item.id} style={styles.itemContainer} onPress={()=> navigation.navigate('DetalleDeMovimiento')}>
                             <View>
                                 <Text style={styles.itemDescripcion}>{item.descripcion}</Text>

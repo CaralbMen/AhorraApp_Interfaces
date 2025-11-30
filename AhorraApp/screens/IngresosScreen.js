@@ -60,7 +60,7 @@ export default function IngresosScreen() {
           fecha: movimiento.fecha,
           tipo: movimiento.tipo,
           categoria_id: categoriaId,
-          // usuario_id,
+          usuario_id,
         });
         if (ok) {
           alert('Movimiento guardado en la BD');

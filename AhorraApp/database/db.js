@@ -6,6 +6,17 @@ class DatabaseService{
     async initialize(){
         this.db= await SQLite.openDatabaseAsync('AhorraMas.db');
         await this.db.execAsync('PRAGMA foreign_keys= ON');
+        
+        // IMPORTANTE: Borrar estas líneas una vez que la BD esté actualizada
+        console.log('Recreando tablas para actualizar esquema...');
+        try {
+            await this.db.execAsync('DROP TABLE IF EXISTS movimientos;');
+            await this.db.execAsync('DROP TABLE IF EXISTS categorias;');
+            await this.db.execAsync('DROP TABLE IF EXISTS usuarios;');
+        } catch (e) {
+            console.log('No se pudieron borrar tablas (probablemente no existen):', e);
+        }
+        
         await this.db.execAsync(`
             CREATE TABLE IF NOT EXISTS usuarios(
                 id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
