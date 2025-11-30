@@ -3,26 +3,30 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Platform, 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import estilosGlobales from '../styles/estilosGlobales';
-import { obtenerCategorias, eliminarCategoria, obtenerIdUsuarioDefault } from '../../controllers/categoriasController';
+import { obtenerCategorias, eliminarCategoria } from '../../controllers/categoriasController';
+import { useAuth } from '../../context/AuthContext';
 
 export default function CategoriasScreen({ navigation }) {
   const [categorias, setCategorias] = useState([]);
+  const { user } = useAuth();
 
   useFocusEffect(
     useCallback(() => {
-      cargarCategorias();
-    }, [])
+      if (user) {
+        cargarCategorias();
+      }
+    }, [user])
   );
 
   const cargarCategorias = async () => {
     try {
-        const idUsuario = await obtenerIdUsuarioDefault();
-        if (idUsuario) {
-            const data = await obtenerCategorias(idUsuario);
+        if (user && user.id_usuario) {
+            console.log("Cargando categorías para usuario:", user.id_usuario);
+            const data = await obtenerCategorias(user.id_usuario);
             setCategorias(data || []);
         }
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando categorías:", error);
     }
   };
 
@@ -60,13 +64,14 @@ export default function CategoriasScreen({ navigation }) {
             </View>
             <View style={estilosGlobales.logoContent}>
                 <ImageBackground
-                    source={require('../../assets/LogoAhorraSinFondo.png')}
+                    source={require ('../../assets/LogoAhorraSinFondo.png')}
                     style={estilosGlobales.logo}
                 />
             </View>
         </View>
         <View style={estilosGlobales.pantallaActualContainer}>
-            <Text style={estilosGlobales.textoPantalla}>Tus Categorías</Text>
+            {/* Mostramos de quién son las categorías */}
+            <Text style={estilosGlobales.textoPantalla}>Categorías de {user?.nombre}</Text>
         </View>
         
         <View style={[estilosGlobales.contenidoScreen, { flex: 1 }]}>
@@ -81,28 +86,32 @@ export default function CategoriasScreen({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
-                {categorias.map((item) => (
-                <View key={item.id.toString()} style={styles.categoriaCard}>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardNombre}>{item.nombre}</Text>
-                        <Text style={styles.cardDescripcion}>{item.descripcion}</Text>
+                {categorias.length === 0 ? (
+                    <Text style={{textAlign: 'center', marginTop: 20, color: '#888'}}>No tienes categorías registradas.</Text>
+                ) : (
+                    categorias.map((item) => (
+                    <View key={item.id.toString()} style={styles.categoriaCard}>
+                        <View style={styles.cardInfo}>
+                            <Text style={styles.cardNombre}>{item.nombre}</Text>
+                            <Text style={styles.cardDescripcion}>{item.descripcion}</Text>
+                        </View>
+                        <View style={styles.cardDetails}>
+                            <Text style={styles.cardPresupuesto}>${item.presupuesto}</Text>
+                            <Text style={styles.cardPeriodicidad}>{item.periodo}</Text>
+                        </View>
+                        <View style={styles.cardBotones}>
+                            <TouchableOpacity onPress={() => navigation.navigate('EditarCategoriaScreen', { 
+                                id: item.id,
+                            })}>
+                                <Text style={styles.cardIcon}>✏️</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => confirmarEliminar(item.id, item.nombre)}>
+                                <Text style={styles.cardIcon}>🗑️</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={styles.cardDetails}>
-                        <Text style={styles.cardPresupuesto}>${item.presupuesto}</Text>
-                        <Text style={styles.cardPeriodicidad}>{item.periodo}</Text>
-                    </View>
-                    <View style={styles.cardBotones}>
-                        <TouchableOpacity onPress={() => navigation.navigate('EditarCategoriaScreen', { 
-                            id: item.id,
-                        })}>
-                            <Text style={styles.cardIcon}>✏️</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => confirmarEliminar(item.id, item.nombre)}>
-                            <Text style={styles.cardIcon}>🗑️</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            ))}
+                    ))
+                )}
             </ScrollView>
         </View>
     </SafeAreaProvider>

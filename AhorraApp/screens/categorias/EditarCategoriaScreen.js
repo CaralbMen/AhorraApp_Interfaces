@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import estilosGlobales from '../styles/estilosGlobales';
-import { agregarCategoria, editarCategoria, obtenerCategoriaPorId, obtenerIdUsuarioDefault } from '../../controllers/categoriasController';
+import { agregarCategoria, editarCategoria, obtenerCategoriaPorId } from '../../controllers/categoriasController';
+import { useAuth } from '../../context/AuthContext';
 
 export default function EditarCategoriaScreen({ navigation, route }) {
   const { id } = route.params || {};
   const esEdicion = !!id;
+  const { user } = useAuth();
 
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -39,21 +41,20 @@ export default function EditarCategoriaScreen({ navigation, route }) {
         return;
     }
 
+    if (!user || !user.id_usuario) {
+        Alert.alert("Error", "No se identificó al usuario. Inicia sesión nuevamente.");
+        return;
+    }
+
     let exito = false;
     const presupuestoNum = parseFloat(presupuesto) || 0; 
 
     try {
-        const idUsuarioReal = await obtenerIdUsuarioDefault();
-        
-        if (!idUsuarioReal) {
-             Alert.alert("Error", "No se encontró ningún usuario en la base de datos.");
-             return;
-        }
-
         if (esEdicion) {
             exito = await editarCategoria(id, nombre, descripcion, presupuestoNum, periodicidad);
         } else {
-            exito = await agregarCategoria(nombre, descripcion, presupuestoNum, periodicidad, idUsuarioReal);
+            console.log("Guardando para usuario:", user.id_usuario);
+            exito = await agregarCategoria(nombre, descripcion, presupuestoNum, periodicidad, user.id_usuario);
         }
     } catch (e) {
         console.error("Error en handleGuardar:", e);
