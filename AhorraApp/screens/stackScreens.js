@@ -1,7 +1,6 @@
 //Importacion de componentes
 import { StyleSheet, View, Button, Text } from 'react-native';
 import React, {useState} from 'react'
-// import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 //Importacion de componenetes para el navigation
 import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
@@ -76,6 +75,4 @@ export default function StackScreens() {
       </Menucito.Navigator>
     </NavigationContainer>
   );
-
-    
 }

@@ -1,47 +1,84 @@
-import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { iniciarSesion, registrarUsuario, actualizarUsuario } from '../controllers/usuarioController';
+import React, { createContext, useState, useContext } from 'react';
+import { iniciarSesion, registrarUsuario, actualizarUsuario, eliminarUsuario } from '../controllers/usuarioController';
 
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-	const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-	// Iniciar sesión y establecer usuario en contexto
-	const login = useCallback(async (correo, contrasena) => {
-		const u = await iniciarSesion(correo, contrasena);
-		if (u) setUser(u);
-		return u;
-	}, []);
+    // Iniciar sesión y establecer usuario en contexto
+    async function login(correo, password) {
+        try {
+            const usuario = await iniciarSesion(correo, password);
+            setUser(usuario);
+            return usuario;
+        } catch (error) {
+            throw error;
+        }
+    }
 
-	// Registrar usuario y opcionalmente iniciar sesión
-	const register = useCallback(async (data) => {
-		await registrarUsuario(data);
-		// Después de registrar, iniciar sesión
-		const u = await iniciarSesion(data.correo, data.contrasena);
-		if (u) setUser(u);
-		return u;
-	}, []);
+    // Registrar nuevo usuario
+    async function register(data) {
+        try {
+            await registrarUsuario(data);
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
 
-	const logout = useCallback(() => {
-		setUser(null);
-	}, []);
+    // Actualizar perfil del usuario
+    async function updateProfile({ nombre, correo, telefono, contrasena }) {
+        try {
+            if (!user) return false;
+            const actualizado = await actualizarUsuario(user.id_usuario, { 
+                nombre, 
+                correo, 
+                telefono, 
+                contrasena 
+            });
+            setUser(actualizado);
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
 
-	const updateProfile = useCallback(async (updates) => {
-		if (!user?.id_usuario) throw new Error('No authenticated user');
-		const updated = await actualizarUsuario(user.id_usuario, updates);
-		setUser(updated);
-		return updated;
-	}, [user]);
+    // Cerrar sesión
+    function logout() {
+        setUser(null);
+    }
 
-	return (
-		<AuthContext.Provider value={{ user, login, logout, register, updateProfile }}>
-			{children}
-		</AuthContext.Provider>
-	);
+    // Eliminar cuenta
+    async function deleteAccount() {
+        try {
+            if (!user) throw new Error('No hay usuario autenticado');
+            await eliminarUsuario(user.id_usuario);
+            setUser(null);
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    return (
+        <AuthContext.Provider value={{ 
+            user, 
+            login, 
+            register, 
+            updateProfile, 
+            logout, 
+            deleteAccount 
+        }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
 export function useAuth() {
-	const ctx = React.useContext(AuthContext);
-	if (!ctx) throw new Error('useAuth must be used within AuthProvider');
-	return ctx;
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth debe usarse dentro de AuthProvider');
+    }
+    return context;
 }

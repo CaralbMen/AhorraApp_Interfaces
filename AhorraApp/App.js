@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import Login from './screens/Login';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { initDatabaseOnce } from './database/db';
-import { AuthProvider } from './context/AuthContext';
+import StackScreens from './screens/stackScreens';
+import Login from './screens/Login';
+
+function AppContent() {
+  const { user } = useAuth();
+  
+  // Si no hay usuario autenticado, muestra Login
+  // Si hay usuario, muestra el Tab Navigator
+  return user ? <StackScreens /> : <Login />;
+}
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -11,16 +20,17 @@ export default function App() {
       try {
         await initDatabaseOnce();
         setReady(true);
-      } catch (error) {
-        console.warn('Error BD:', error);
+      } catch (e) {
+        console.log('Error init DB:', e);
       }
     })();
   }, []);
 
   if (!ready) return null;
+
   return (
     <AuthProvider>
-      <Login />
+      <AppContent />
     </AuthProvider>
   );
 }

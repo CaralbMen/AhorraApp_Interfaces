@@ -9,6 +9,7 @@ function generarToken6() {
 function validarEmail(email) {
   return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test((email || '').trim());
 }
+
 function validarPassword(pw) {
   return typeof pw === 'string' && pw.trim().length >= 6;
 }
@@ -60,42 +61,38 @@ export async function cambiarPasswordConToken(correo, token, nuevaPassword) {
   return true;
 }
 
-export async function existeCorreo(correo) {
-  const fila = await obtenerPrimero(
-    'SELECT id_usuario FROM usuarios WHERE email = ? LIMIT 1',
-    [(correo || '').trim().toLowerCase()]
-  );
-  return !!fila;
-}
-
-export async function registrarUsuario({ nombre, correo, telefono, contrasena }) {
-  if (!nombre || !correo || !contrasena) throw new Error('Complete los campos obligatorios');
-  const correoNorm = correo.trim().toLowerCase();
+// Registrar nuevo usuario
+export async function registrarUsuario({ nombre, email, telefono, password }) {
+  const correoNorm = (email || '').trim().toLowerCase();
+  if (!nombre || !correoNorm || !password) throw new Error('Complete todos los campos');
   if (!validarEmail(correoNorm)) throw new Error('Correo inválido');
-  if (!validarPassword(contrasena)) throw new Error('La contraseña debe tener mínimo 6 caracteres');
-  if (await existeCorreo(correoNorm)) throw new Error('El correo ya está registrado');
+  if (!validarPassword(password)) throw new Error('La contraseña debe tener mínimo 6 caracteres');
+
+  const existe = await obtenerPrimero('SELECT id_usuario FROM usuarios WHERE email = ? LIMIT 1', [correoNorm]);
+  if (existe) throw new Error('El correo ya está registrado');
 
   await ejecutar(
     'INSERT INTO usuarios (nombre, email, telefono, password) VALUES (?,?,?,?)',
-    [nombre.trim(), correoNorm, (telefono || '').trim(), contrasena]
+    [nombre, correoNorm, telefono || '', password]
   );
   return true;
 }
 
-export async function iniciarSesion(correo, contrasena) {
-  if (!correo || !contrasena) throw new Error('Complete los campos');
-  const correoNorm = correo.trim().toLowerCase();
-  if (!validarEmail(correoNorm)) throw new Error('Correo inválido');
+// Iniciar sesión
+export async function iniciarSesion(correo, password) {
+  const correoNorm = (correo || '').trim().toLowerCase();
+  if (!correoNorm || !password) throw new Error('Complete todos los campos');
 
   const fila = await obtenerPrimero(
     'SELECT * FROM usuarios WHERE email = ? AND password = ? LIMIT 1',
-    [correoNorm, contrasena]
+    [correoNorm, password]
   );
   if (!fila) throw new Error('Credenciales inválidas');
 
   return new Usuario(fila);
 }
 
+// Actualizar usuario
 export async function actualizarUsuario(id_usuario, { nombre, correo, telefono, contrasena }) {
   if (!id_usuario) throw new Error('ID de usuario requerido');
   const correoNorm = (correo || '').trim().toLowerCase();
@@ -106,4 +103,22 @@ export async function actualizarUsuario(id_usuario, { nombre, correo, telefono, 
   await ejecutar(sql, [nombre, correoNorm, telefono || '', contrasena || '', id_usuario]);
   const fila = await obtenerPrimero('SELECT * FROM usuarios WHERE id_usuario = ? LIMIT 1', [id_usuario]);
   return new Usuario(fila);
+}
+
+// Eliminar usuario
+export async function eliminarUsuario(id_usuario) {
+  if (!id_usuario) throw new Error('ID de usuario requerido');
+
+  // Borra movimientos asociados
+  await ejecutar('DELETE FROM movimientos WHERE usuario_id = ?', [id_usuario]);
+
+  // Borra tokens de recuperación asociados al correo del usuario
+  const fila = await obtenerPrimero('SELECT email FROM usuarios WHERE id_usuario = ? LIMIT 1', [id_usuario]);
+  if (fila?.email) {
+    await ejecutar('DELETE FROM tokens_reset WHERE email = ?', [fila.email]);
+  }
+
+  // Borra el usuario
+  await ejecutar('DELETE FROM usuarios WHERE id_usuario = ?', [id_usuario]);
+  return true;
 }
