@@ -47,25 +47,32 @@ export default function Transacciones({navigation}){
         }
         cargarMovimientos();
     },[user]);
+
+
+
     function normalizeDate(str) {
-        if (!str) return null;
-            return str.replace(/\//g, '-');
-        }
-        const aplicarFiltros = () => {
+    if (!str) return null;
+    return str.replace(/\//g, '-'); // "2025/11/29" → "2025-11-29"
+    }
+
+    const aplicarFiltros = () => {
         let filtrados = [...allMovimientos];
+
         if (categoriaFilter) {
             filtrados = filtrados.filter(m =>
             String(m.categoria_id) === String(categoriaFilter) ||
             String(m.categoria_nombre) === String(categoriaFilter)
             );
         }
+
         if (startDate) {
-            const sd = new Date(startDate);
+            const sd = new Date(startDate); // YYYY-MM-DD
             filtrados = filtrados.filter(m => {
-            const mf = new Date(normalizeDate(m.fecha));
+            const mf = new Date(normalizeDate(m.fecha)); 
             return !isNaN(mf) && mf.getTime() >= sd.getTime();
             });
         }
+
         if (endDate) {
             const ed = new Date(endDate);
             filtrados = filtrados.filter(m => {
@@ -73,10 +80,10 @@ export default function Transacciones({navigation}){
             return !isNaN(mf) && mf.getTime() <= ed.getTime();
             });
         }
+
         setMovimientosData(filtrados);
     };
 
-  
 
     const limpiarFiltros = () =>{
         setCategoriaFilter(null);
