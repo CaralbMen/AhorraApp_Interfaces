@@ -56,15 +56,16 @@ export default function Login() {
         // default:
           return(
             <View style={styles.mainContainer}>
-              <ScrollView 
-                contentContainerStyle={styles.scrollContainer}
-                showsVerticalScrollIndicator={false}
-              >
-              <View style={estilosGlobales.cabecera}>
+               <View style={estilosGlobales.cabecera}>
                 <View style={estilosGlobales.tituloContent}>
                   <Text style={estilosGlobales.titulo}>Ahorra + App</Text>
                 </View>
               </View>
+              <ScrollView 
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+              >
+             
               <View>
                 <ImageBackground
                   source={require('../assets/LogoAhorraSinFondo.png')}

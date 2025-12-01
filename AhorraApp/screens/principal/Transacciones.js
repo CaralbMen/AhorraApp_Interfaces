@@ -47,29 +47,36 @@ export default function Transacciones({navigation}){
         }
         cargarMovimientos();
     },[user]);
-
-    const aplicarFiltros = () =>{
-        // console.log('aplicando filtros:', {categoriaFilter, startDate, endDate});
-        let filtrados = [...allMovimientos];
-        if(categoriaFilter){
-            filtrados = filtrados.filter(m => String(m.categoria_id) === String(categoriaFilter) || String(m.categoria_nombre) === String(categoriaFilter));
+    function normalizeDate(str) {
+        if (!str) return null;
+            return str.replace(/\//g, '-');
         }
-        if(startDate){
+        const aplicarFiltros = () => {
+        let filtrados = [...allMovimientos];
+        if (categoriaFilter) {
+            filtrados = filtrados.filter(m =>
+            String(m.categoria_id) === String(categoriaFilter) ||
+            String(m.categoria_nombre) === String(categoriaFilter)
+            );
+        }
+        if (startDate) {
             const sd = new Date(startDate);
-            if(!isNaN(sd)) filtrados = filtrados.filter(m => {
-                const mf = new Date(m.fecha);
-                return !isNaN(mf) && mf >= sd;
+            filtrados = filtrados.filter(m => {
+            const mf = new Date(normalizeDate(m.fecha));
+            return !isNaN(mf) && mf.getTime() >= sd.getTime();
             });
         }
-        if(endDate){
+        if (endDate) {
             const ed = new Date(endDate);
-            if(!isNaN(ed)) filtrados = filtrados.filter(m => {
-                const mf = new Date(m.fecha);
-                return !isNaN(mf) && mf <= ed;
+            filtrados = filtrados.filter(m => {
+            const mf = new Date(normalizeDate(m.fecha));
+            return !isNaN(mf) && mf.getTime() <= ed.getTime();
             });
         }
         setMovimientosData(filtrados);
-    }
+    };
+
+  
 
     const limpiarFiltros = () =>{
         setCategoriaFilter(null);
