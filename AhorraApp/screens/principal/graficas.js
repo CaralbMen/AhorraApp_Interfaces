@@ -20,7 +20,9 @@ export default function Graficas({navigation}){
         setPorCategoria(sumaCat || []);
 
         const now = new Date();
-        const ym = now.toISOString().slice(0,7); //anio / mes
+        //const ym = now.toISOString().slice(0,7); //anio / mes
+        const ym = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+// "2025-11"
         const comp = await obtenerComparativaMensual(user.id_usuario, ym);
         setComparativaMes(comp || { total_ingresos: 0, total_egresos: 0 });
       }catch(e){
